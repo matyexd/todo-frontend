@@ -1,0 +1,16 @@
+.right-content-container {
+	margin: 30px 90px;
+	font-family: 'Roboto';
+}
+
+.right-content__top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.right-content__title {
+	font-family: 'Montserrat';
+	font-weight: bold;
+	font-size: 40px;
+}

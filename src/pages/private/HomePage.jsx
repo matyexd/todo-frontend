@@ -1,7 +1,7 @@
 import React from 'react'
-import style from './style.css'
-import RightContent from '../../components/Todo/RightContent'
-import LeftContent from '../../components/Todo/LeftContent'
+import style from './style.scss'
+import RightContent from '../../components/Todo/RightContent/RightContent'
+import LeftContent from '../../components/Todo/LeftContent/LeftContent'
 
 const HomePage = () => {
 	return (

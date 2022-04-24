@@ -1,0 +1,54 @@
+.checkbox {
+	input {
+		display: none;
+	}
+
+	label {
+		display: flex;
+		border: 2px solid #e8e8e8;
+		width: 25px;
+		height: 25px;
+		border-radius: 50%;
+		cursor: pointer;
+		align-items: center;
+		justify-content: center;
+
+		svg {
+			display: flex;
+			opacity: 0;
+			width: 13px;
+		}
+	}
+
+	input:checked + label {
+		background-color: black;
+		border: none;
+		border: 2px solid #e8e8e8;
+		width: 25px;
+		height: 25px;
+
+		svg {
+			opacity: 1;
+			path {
+				stroke: white;
+			}
+		}
+	}
+
+	&:hover {
+		label {
+			background-color: #f2f2f2;
+			border: none;
+			border: 2px solid #e8e8e8;
+			width: 25px;
+			height: 25px;
+
+			svg {
+				opacity: 1;
+				path {
+					stroke: #b2b2b2;
+				}
+			}
+		}
+	}
+}

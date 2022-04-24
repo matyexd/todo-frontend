@@ -3,12 +3,12 @@
 }
 
 .right-content {
-	width: 30%;
+	width: 400px;
 	height: 100vh;
 	background-color: #f2f2f2;
 }
 
 .left-content {
-	width: 70%;
+	width: calc(100% - 400px);
 	height: 100vh;
 }
