@@ -1,0 +1,14 @@
+.container {
+	display: flex;
+}
+
+.right-content {
+	width: 30%;
+	height: 100vh;
+	background-color: #f2f2f2;
+}
+
+.left-content {
+	width: 70%;
+	height: 100vh;
+}

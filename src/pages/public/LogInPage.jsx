@@ -1,9 +1,10 @@
 import React from 'react'
+import LogIn from '../../components/Auth/LogIn/LogIn'
 
 const LogInPage = () => {
 	return (
 		<div>
-			<h3>Тут рисуй страницу входа</h3>
+			<LogIn />
 		</div>
 	)
 }

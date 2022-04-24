@@ -1,12 +1,17 @@
 import React from 'react'
-import { useLocation } from 'react-router'
+import style from './style.css'
+import RightContent from '../../components/Todo/RightContent'
+import LeftContent from '../../components/Todo/LeftContent'
 
 const HomePage = () => {
-	let location = useLocation()
-
 	return (
-		<div>
-			<h3>Главная</h3>
+		<div className='container'>
+			<div className='right-content'>
+				<LeftContent />
+			</div>
+			<div className='left-content'>
+				<RightContent />
+			</div>
 		</div>
 	)
 }
