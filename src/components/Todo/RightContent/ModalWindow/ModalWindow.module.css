@@ -1,0 +1,83 @@
+.modal {
+    font-family: 'Roboto';
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0, 0.26);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0);
+}
+
+.modal.active {
+    transform: scale(1);
+}
+
+.modalContent {
+    position: absolute;
+    padding: 20px;
+    background-color: white;
+    width: 50vw;
+    height: 70vh;
+}
+
+.touchableArea {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 50px;
+    height: 50px;
+}
+
+.touchableArea:hover .close{
+    opacity: 1;
+}
+
+.close {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    opacity: 0.3;
+}
+
+.close:before, .close:after {
+    position: absolute;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+}
+
+.close:before {
+    transform: rotate(45deg);
+}
+
+.close:after {
+    transform: rotate(-45deg);
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container div {
+    margin-top: 50px;
+}
+
+.quit {
+    font-size: 24px;
+    color: rgba(255, 70, 70, 1);
+}
+
+.quit:hover {
+    cursor: pointer;
+}
+

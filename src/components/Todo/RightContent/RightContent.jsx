@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import style from './style.css'
-import ava from '../../../assets/images/ava1.jpeg'
+import ava from '../../../assets/svg/profile-logo.svg'
 import { UiAvatar } from '../../ui-kit'
 import TaskItem from './TaskItem/TaskItem'
 import { svgIcon } from '../../../assets/svg'
 import UiAccordion from '../../ui-kit/accordion/UiAccordion/UiAccordion'
+import ModalWindow from "./ModalWindow/ModalWindow";
 
 const RightContent = () => {
 	const indexes = [1, 2, 3, 4]
@@ -41,12 +42,17 @@ const RightContent = () => {
 		{ id: 11, text: 'Задача 3' },
 	]
 
+	const [modalActive, setModalActive] = useState(false)
+
 	return (
 		<div className='right-content-container'>
 			<div className='right-content__top'>
 				<div className='right-content__title'>Заголовок</div>
 				<div>
-					<UiAvatar src={ava} size={73} />
+					<div onClick={() => setModalActive(true)}>
+						<UiAvatar src={ava} size={73} />
+					</div>
+					<ModalWindow active={modalActive} setActive={setModalActive} />
 				</div>
 			</div>
 			<div style={{ marginTop: 40 }}>
