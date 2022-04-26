@@ -2,13 +2,13 @@
 	display: flex;
 }
 
-.right-content {
-	width: 400px;
+.left-content {
+	width: 440px;
 	height: 100vh;
 	background-color: #f2f2f2;
 }
 
-.left-content {
-	width: calc(100% - 400px);
+.right-content {
+	width: calc(100% - 440px);
 	height: 100vh;
 }

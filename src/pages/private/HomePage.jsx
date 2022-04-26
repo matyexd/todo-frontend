@@ -6,10 +6,10 @@ import LeftContent from '../../components/Todo/LeftContent/LeftContent'
 const HomePage = () => {
 	return (
 		<div className='container'>
-			<div className='right-content'>
+			<div className='left-content'>
 				<LeftContent />
 			</div>
-			<div className='left-content'>
+			<div className='right-content'>
 				<RightContent />
 			</div>
 		</div>
