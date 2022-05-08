@@ -1,0 +1,61 @@
+.SignUp-container {
+    display: flex;
+    margin: auto;
+    font-family: 'Roboto';
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    align-items: center;
+    font-size: 20px;
+}
+
+.SignUp_Btn {
+    display: flex;
+    height: 80px;
+    width: 450px;
+    border-radius: 5px;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.SignUp-topContainer {
+    height: 500px;
+    flex-direction: column;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    cursor: default;
+}
+
+.SignUp-content_top {
+    height: 431px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.SignUp-text {
+    display: flex;
+    color: #909090;
+    justify-content: center;
+    cursor: pointer;
+}
+
+input::placeholder {
+    color: #C4C4C4;
+    font-family: 'Roboto';
+}
+
+input {
+    align-items: center;
+    border-radius: 5px;
+    font-size: 20px;
+    height: 74px;
+    padding-left: 20px;
+    font-family: 'Roboto';
+    outline-color: #494949;
+}
+
