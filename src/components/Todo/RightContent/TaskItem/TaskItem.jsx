@@ -1,11 +1,14 @@
 import React from 'react'
-import style from './style.scss'
+import style from './style.css'
 
-const TaskItem = ({ id, title, description, date, active}) => {
+const TaskItem = ({ id, title, description, date, active, selected, changeSelected}) => {
 	const handleCheckBox = () => {}
 
 	return (
-		<div style={{ display: 'flex', marginBottom: 25 }}>
+		<div
+			 onClick={id === selected ? () => changeSelected(0) : () => changeSelected(id)}
+			 className={selected === id? 'item selected' : 'item'}
+		>
 			<div className='checkbox'>
 				<input type='checkbox' id={id + '__label'} defaultChecked={!active} />
 				<label htmlFor={id + '__label'} onClick={() => handleCheckBox()}>

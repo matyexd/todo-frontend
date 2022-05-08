@@ -32,6 +32,10 @@ const RightContent = () => {
 	]
 
 	const [modalActive, setModalActive] = useState(false)
+	const [selected, setSelected] = useState(0)
+	const changeSelected = (id) => {
+		setSelected(id)
+	}
 
 	return (
 		<div className='right-content-container'>
@@ -46,7 +50,15 @@ const RightContent = () => {
 			</div>
 			<div style={{ marginTop: 40 }}>
 				{activeTasks.map(item => (
-					<TaskItem id={item.id} title={item.title} description={item.description} date={item.date} active={item.active}/>
+					<TaskItem
+						id={item.id}
+						title={item.title}
+						description={item.description}
+						date={item.date}
+						active={item.active}
+						selected={selected}
+						changeSelected={changeSelected}
+					/>
 				))}
 			</div>
 			<div style={{ display: 'flex', marginLeft: 7, marginTop: 40 }}>
