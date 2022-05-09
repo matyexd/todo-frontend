@@ -1,0 +1,84 @@
+.checkbox input {
+  display: none;
+}
+.checkbox label {
+  display: flex;
+  border: 2px solid #e8e8e8;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+.checkbox label svg {
+  display: flex;
+  opacity: 0;
+  width: 13px;
+}
+.checkbox input:checked + label {
+  background-color: black;
+  border: none;
+  border: 2px solid #e8e8e8;
+  width: 25px;
+  height: 25px;
+}
+.checkbox input:checked + label svg {
+  opacity: 1;
+}
+.checkbox input:checked + label svg path {
+  stroke: white;
+}
+.checkbox:hover label {
+  background-color: #f2f2f2;
+  border: none;
+  border: 2px solid #e8e8e8;
+  width: 25px;
+  height: 25px;
+}
+.checkbox:hover label svg {
+  opacity: 1;
+}
+.checkbox:hover label svg path {
+  stroke: #b2b2b2;
+}
+
+.task-name {
+  font-family: "Roboto", serif;
+  font-size: 18px;
+  margin-bottom: 5px;
+  margin-left: 15px;
+  margin-top: 5px;
+}
+.task-additionally-bottom {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.task-additionally-bottom:hover div {
+  cursor: pointer;
+}
+.task-date {
+  font-family: "Roboto", serif;
+  font-size: 12px;
+  color: #363636;
+  opacity: 0.9;
+  margin-left: 60px;
+  margin-top: -18px;
+}
+
+.item {
+  display: flex;
+  margin-top: 10px;
+  padding: 16px;
+}
+.item:hover {
+  cursor: pointer;
+  background-color: #F1F1F1;
+}
+
+.selected {
+  background-color: #F1F1F1;
+}
+
+/*# sourceMappingURL=style.css.map */

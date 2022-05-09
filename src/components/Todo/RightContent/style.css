@@ -14,3 +14,17 @@
 	font-weight: bold;
 	font-size: 40px;
 }
+
+.add-task-btn {
+	display: flex;
+	margin-left: 7px;
+	margin-top: 40px;
+}
+
+.add-task-btn div:hover {
+	cursor: pointer;
+}
+
+.add-task-btn img:hover {
+	cursor: pointer;
+}

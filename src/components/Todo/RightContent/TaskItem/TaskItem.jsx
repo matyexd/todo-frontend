@@ -2,12 +2,13 @@ import React from 'react'
 import style from './style.css'
 import calendar from '../../../../assets/svg/calendar-symbol.svg'
 
-const TaskItem = ({ id, title, description, date, active, selected, changeSelected}) => {
+const TaskItem = ({ id, title, description, date, active, selected, changeSelected, deleteTask }) => {
 	const handleCheckBox = () => {}
 
 	return (
-		<div onClick={id === selected ? () => changeSelected(0) : () => changeSelected(id)}>
-			<div className={selected === id? 'item selected' : 'item'}>
+		<div>
+			<div className={selected === id? 'item selected' : 'item'}
+				 onClick={id === selected ? () => changeSelected(0) : () => changeSelected(id)}>
 				<div className='checkbox'>
 					<input type='checkbox' id={id + '__label'} defaultChecked={!active} />
 					<label htmlFor={id + '__label'} onClick={() => handleCheckBox()}>
@@ -34,7 +35,7 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 					{description}
 				</div>
 				<div className='task-additionally-bottom'>
-					<div style={{color: '#FF5F5F'}}>
+					<div style={{color: '#FF5F5F'}} onClick={() => deleteTask(id)}>
 						Удалить задачу
 					</div>
 					<div>
