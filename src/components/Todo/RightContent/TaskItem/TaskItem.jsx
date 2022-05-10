@@ -2,15 +2,21 @@ import React from 'react'
 import style from './style.css'
 import calendar from '../../../../assets/svg/calendar-symbol.svg'
 
-const TaskItem = ({ id, title, description, date, active, selected, changeSelected, deleteTask }) => {
+const TaskItem = ({ id, title, description, date, active, selected, changeSelected, deleteTask, changeActive }) => {
 	const handleCheckBox = () => {}
 
 	return (
 		<div>
-			<div className={selected === id? 'item selected' : 'item'}
-				 onClick={id === selected ? () => changeSelected(0) : () => changeSelected(id)}>
+			<div
+				className={selected === id? 'item selected' : 'item'}
+				onClick={id === selected ? () => changeSelected(0) : () => changeSelected(id)}
+			>
 				<div className='checkbox'>
-					<input type='checkbox' id={id + '__label'} defaultChecked={!active} />
+					<input
+						type='checkbox' id={id + '__label'}
+						checked={!active}
+						onClick={() => changeActive(id)}
+					/>
 					<label htmlFor={id + '__label'} onClick={() => handleCheckBox()}>
 						<svg width='11' height='8' viewBox='0 0 11 8' fill='none'>
 							<path

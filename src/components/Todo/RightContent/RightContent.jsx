@@ -22,7 +22,7 @@ const RightContent = () => {
 		{ id: 101, title: 'Купить танк', description: 'Описание задачи', date: '20 апреля', active: false },
 		{ id: 102, title: 'Починить книгу', description: 'Описание задачи', date: '20 апреля', active: false },
 		{ id: 103, title: 'Организовать бой носорогов', description: 'Описание задачи', date: '20 апреля', active: false },
-		{ id: 103, title: 'Заказать такси', description: 'Описание задачи', date: '', active: false },
+		{ id: 104, title: 'Заказать такси', description: 'Описание задачи', date: '', active: false },
 		{ id: 105, title: 'Почитать старших', description: 'Описание задачи', date: '20 апреля', active: false },
 		{ id: 106, title: 'Устроиться на работу', description: 'Описание задачи', date: '20 апреля', active: false },
 		{ id: 107, title: 'Взломать сейф', description: 'Описание задачи', date: '20 апреля', active: false },
@@ -33,8 +33,7 @@ const RightContent = () => {
 	])
 
 	let activeTasks = tasks.filter(item => item.active === true)
-
-	let completedTasks = tasks.filter(item => item.active === false)
+	let completedTasks = tasks.filter(item => item.active !== true)
 
 	const [modalActive, setModalActive] = useState(false)
 	const [selected, setSelected] = useState(0)
@@ -47,6 +46,25 @@ const RightContent = () => {
 		let createdId = Math.random()
 		setTasks([...tasks, {id: createdId, title: 'Созданная задача', description: 'Созданная задача', date: '', active: true}])
 		changeSelected(createdId)
+	}
+
+	const changeActive = (id) => {
+		for (let item of tasks) {
+			if (item.id === id) {
+				if (item.active === true) {
+					item.active = !item.active
+					completedTasks.unshift(item)
+					activeTasks = activeTasks.filter(item => item.id !== id)
+					break
+				}
+				else {
+					item.active = !item.active
+					activeTasks.unshift(item)
+					completedTasks = completedTasks.filter(item => item.id !== id)
+					break
+				}
+			}
+		}
 	}
 
 	return (
@@ -71,6 +89,7 @@ const RightContent = () => {
 						selected={selected}
 						changeSelected={changeSelected}
 						deleteTask={deleteTask}
+						changeActive={changeActive}
 					/>
 				))}
 			</div>
