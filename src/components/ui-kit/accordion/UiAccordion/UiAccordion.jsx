@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './Accordion.css'
 import { svgIcon } from '../../../../assets/svg'
+import TaskItem from "../../../Todo/RightContent/TaskItem/TaskItem";
 
-export default function UiAccordion({ title = 'hello', tasks, renderItem }) {
+export default function UiAccordion({ title = 'hello', tasks}) {
 	const [toggle, setToggle] = useState(false)
 	const [heightEl, setHeightEl] = useState()
 
@@ -30,7 +31,7 @@ export default function UiAccordion({ title = 'hello', tasks, renderItem }) {
 			>
 				{tasks.map(item => (
 					<div key={item.id} aria-hidden={toggle ? 'true' : 'false'}>
-						{renderItem(item.text)}
+						<TaskItem id={item.id} title={item.title} description={item.description} date={item.date} active={item.active}/>
 					</div>
 				))}
 			</div>
