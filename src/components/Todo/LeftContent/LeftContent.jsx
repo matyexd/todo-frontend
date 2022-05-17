@@ -15,7 +15,25 @@ const LeftContent = () => {
 		{ id: 5, text: 'Категория 5' },
 	])
 	let [highlighted, setHighlighted] = useState(1)
-	
+	let [editable, setEditable] = useState(-1)
+	let [categoryName, setCategoryName] = useState('')
+
+	const removeFunc = (id) => {
+		for (let i = 0; i < mas.length; i++) {
+			if (mas[i].id === id) {
+				mas[i].text = categoryName;
+			}
+		}
+		changeMas([...mas]);
+		setEditable("-1")
+	}
+
+	const handleKeyPress = (event) => {
+		if (event.key === 'Enter') {
+			console.log('enter press here! ')
+		}
+	}
+
 	return (
 		<div className='left-content-container'>
 			<div className='left-content-topContainer'>
@@ -25,14 +43,16 @@ const LeftContent = () => {
 				<div className='left-content__middle'>
 					{mas.map(item =>
 						item.id === highlighted ? (
-							<div
-								className='left-content__item'
-								style={{ backgroundColor: '#DBDBDB' }}
-							>
+							<div className='left-content__item' style={{ backgroundColor: '#DBDBDB' }}>
 								<div className='left-content__itemImg'>
 									<img src={svgIcon.dot} width={12} />
 								</div>
-								{item.text}
+								{item.id === editable ? (
+								<form id="form" onSubmit={() => removeFunc(item.id)}>
+									<input type="text" value={categoryName} onChange={(e) => setCategoryName(e.target.value)}/>
+								</form>
+								) : (
+								<div className="item-text" onDoubleClick={() => { setCategoryName(item.text); setEditable(item.id) } }>{item.text}</div>)}
 								<a href="#" class="close" 
 									onClick= {() => 
 										{
