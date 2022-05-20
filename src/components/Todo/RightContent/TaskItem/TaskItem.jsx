@@ -2,14 +2,14 @@ import React from 'react'
 import style from './style.css'
 import calendar from '../../../../assets/svg/calendar-symbol.svg'
 
-const TaskItem = ({ id, title, description, date, active, selected, changeSelected, deleteTask, changeActive }) => {
+const TaskItem = ({ id, title, description, date, active, selected, changeSelected, deleteTask, changeActive, editable, changeEditable, removeFunc, taskName, setTaskName}) => {
 	const handleCheckBox = () => {}
 
 	return (
 		<div>
 			<div
 				className={selected === id? 'item selected' : 'item'}
-				onClick={id === selected ? () => changeSelected(0) : () => changeSelected(id)}
+				onClick={ id === selected ? () => {changeSelected(0); changeEditable(-1)} : () => {changeSelected(id); changeEditable(-1)} }
 			>
 				<div className='checkbox'>
 					<input
@@ -29,9 +29,31 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 						</svg>
 					</label>
 				</div>
-				<div className='task-name'>
-					{active? title : <s>{title}</s>}
-				</div>
+				{active ?
+					<div>
+						{editable === id?
+							<form className="" id="form" onSubmit={() => removeFunc(id)}>
+								<input
+									className='task-title-input' type="text" value={taskName}
+									onChange={(e) => setTaskName(e.target.value)}
+									onClick={e => e.stopPropagation()}
+								/>
+							</form>
+							:
+							<div
+								className='task-name'
+								onClick={selected === id? e => e.stopPropagation() : e => {}}
+								onDoubleClick={() => {setTaskName(title); changeEditable(id)}}
+							>
+								{title}
+							</div>
+						}
+					</div>
+					:
+					<div className='task-name' onClick={selected === id? e => e.stopPropagation() : e => {}}>
+						<s>{title}</s>
+					</div>
+				}
 			</div>
 			<div className='task-date' style={selected === id? {display: 'none'} : {}}>
 				{date ? 'до ' + date : ''}

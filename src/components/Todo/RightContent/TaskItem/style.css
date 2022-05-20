@@ -58,6 +58,15 @@
 .task-additionally-bottom:hover div {
   cursor: pointer;
 }
+.task-title-input {
+  height: 25px;
+  padding-left: 5px;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-left: 10px;
+  font-weight: normal;
+  width: 400px;
+}
 .task-date {
   font-family: "Roboto", serif;
   font-size: 12px;

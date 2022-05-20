@@ -72,8 +72,14 @@
 			justify-content: space-between;
 		}
 	}
-	&-description {
-
+	&-title-input {
+		height: 25px;
+		padding-left: 5px;
+		border-radius: 5px;
+		font-size: 18px;
+		margin-left: 10px;
+		font-weight: normal;
+		width: 400px;
 	}
 
 	&-date {

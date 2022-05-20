@@ -37,6 +37,18 @@ const RightContent = () => {
 
 	const [modalActive, setModalActive] = useState(false)
 	const [selected, setSelected] = useState(0)
+	let [editable, setEditable] = useState(-1)
+	let [taskName, setTaskName] = useState('')
+
+	const removeFunc = (id) => {
+		for (let i = 0; i < tasks.length; i++) {
+			if (tasks[i].id === id) {
+				tasks[i].title = taskName;
+			}
+		}
+		setTasks([...tasks]);
+		setEditable("-1")
+	}
 
 	const changeSelected = (id) => setSelected(id)
 
@@ -46,6 +58,8 @@ const RightContent = () => {
 		let createdId = Math.random()
 		setTasks([...tasks, {id: createdId, title: 'Созданная задача', description: 'Созданная задача', date: '', active: true}])
 		changeSelected(createdId)
+		setTaskName('Созданная задача')
+		setEditable(createdId)
 	}
 
 	const changeActive = (id) => {
@@ -90,6 +104,11 @@ const RightContent = () => {
 						changeSelected={changeSelected}
 						deleteTask={deleteTask}
 						changeActive={changeActive}
+						editable={editable}
+						changeEditable={setEditable}
+						removeFunc={removeFunc}
+						taskName={taskName}
+						setTaskName={setTaskName}
 					/>
 				))}
 			</div>
