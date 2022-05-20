@@ -1,6 +1,7 @@
 import React from 'react';
 import cl from "./ModalWindow.module.css"
 import ava from "../../../../assets/svg/profile-logo.svg"
+import {Link} from "react-router-dom";
 
 const ModalWindow = ({active, setActive}) => {
     const rootClasses = [cl.modal]
@@ -21,7 +22,8 @@ const ModalWindow = ({active, setActive}) => {
                         Денис Денисович
                     </div>
                     <div className={cl.quit}>
-                        Выйти
+                        <Link to={'/login'}>Выйти</Link>
+
                     </div>
                 </div>
             </div>
