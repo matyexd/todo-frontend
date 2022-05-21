@@ -39,11 +39,33 @@ const RightContent = ({clearAuthUserStore}) => {
 	const [selected, setSelected] = useState(0)
 	let [editable, setEditable] = useState(-1)
 	let [taskName, setTaskName] = useState('')
+	let [descr, setDescr] = useState('')
+	let [taskDate, setTaskDate] = useState('')
 
-	const removeFunc = (id) => {
+	const removeFuncTaskName = (id) => {
 		for (let i = 0; i < tasks.length; i++) {
 			if (tasks[i].id === id) {
 				tasks[i].title = taskName;
+			}
+		}
+		setTasks([...tasks]);
+		setEditable("-1")
+	}
+
+	const removeFuncDescr = (id) => {
+		for (let i = 0; i < tasks.length; i++) {
+			if (tasks[i].id === id) {
+				tasks[i].description = descr;
+			}
+		}
+		setTasks([...tasks]);
+		setEditable("-1")
+	}
+
+	const removeFuncDate = (id) => {
+		for (let i = 0; i < tasks.length; i++) {
+			if (tasks[i].id === id) {
+				tasks[i].date = taskDate;
 			}
 		}
 		setTasks([...tasks]);
@@ -57,6 +79,7 @@ const RightContent = ({clearAuthUserStore}) => {
 	const addTask = () => {
 		let createdId = Math.random()
 		setTasks([...tasks, {id: createdId, title: 'Созданная задача', description: 'Созданная задача', date: '', active: true}])
+		setDescr('Созданная задача')
 		changeSelected(createdId)
 		setTaskName('Созданная задача')
 		setEditable(createdId)
@@ -84,7 +107,7 @@ const RightContent = ({clearAuthUserStore}) => {
 	return (
 		<div className='right-content-container'>
 			<div className='right-content__top'>
-				<div className='right-content__title'>Заголовок</div>
+				<div className='right-content__title'>Список задач</div>
 				<div>
 					<div onClick={() => setModalActive(true)}>
 						<UiAvatar src={ava} size={73} />
@@ -106,9 +129,15 @@ const RightContent = ({clearAuthUserStore}) => {
 						changeActive={changeActive}
 						editable={editable}
 						changeEditable={setEditable}
-						removeFunc={removeFunc}
+						removeFuncTaskName={removeFuncTaskName}
 						taskName={taskName}
 						setTaskName={setTaskName}
+						descr={descr}
+						setDescr={setDescr}
+						removeFuncDescr={removeFuncDescr}
+						taskDate={taskDate}
+						setTaskDate={setTaskDate}
+						removeFuncDate={removeFuncDate}
 					/>
 				))}
 			</div>
