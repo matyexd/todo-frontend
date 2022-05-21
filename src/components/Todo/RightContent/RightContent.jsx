@@ -95,6 +95,7 @@ const RightContent = ({clearAuthUserStore}) => {
 			<div style={{ marginTop: 40 }}>
 				{activeTasks.map(item => (
 					<TaskItem
+						key={item.id}
 						id={item.id}
 						title={item.title}
 						description={item.description}
