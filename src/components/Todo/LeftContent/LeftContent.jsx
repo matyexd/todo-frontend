@@ -43,7 +43,7 @@ const LeftContent = () => {
 				<div className='left-content__middle'>
 					{mas.map(item =>
 						item.id === highlighted ? (
-							<div className='left-content__item__highlighted' style={{ backgroundColor: '#DBDBDB' }}>
+							<div className='left-content__item__highlighted' style={{ backgroundColor: '#DBDBDB' }} key={item.id}>
 								<div>
 									<div className='left-content__flex-box'>
 										<div className='left-content__itemImg'>
@@ -75,6 +75,7 @@ const LeftContent = () => {
 							</div>
 						) : (
 							<div
+								key={item.id}
 								className='left-content__item'
 								onClick={() => setHighlighted(item.id)}
 							>

@@ -65,7 +65,7 @@ const LogInPage = (props) => {
 				{(errors.length !== 0) &&
 				<ul className="errors">
 					{
-						errors.map((error) => <li className="error">{error}</li>)
+						errors.map((error) => <li className="error" key={error.length}>{error}</li>)
 					}
 				</ul>
 				}
