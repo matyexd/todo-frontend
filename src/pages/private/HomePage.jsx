@@ -16,6 +16,8 @@ const HomePage = (props) => {
 		}
 	}, [])
 
+	console.log(props.authUser)
+
 	return (
 		<div className='container'>
 			<div className='left-content'>
