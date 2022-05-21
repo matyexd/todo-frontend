@@ -61,14 +61,14 @@ const LogInPage = (props) => {
 						<button className={"LogIn_Btn"} style={{backgroundColor: "#494949", marginTop: 20}} onClick={() => handleButtonLogin()}> Вход</button>
 						<div className={"LogIn-text"}><Link to={"/signup"}>Нет аккаунта? Зарегистрироваться </Link> </div>
 					</div>
-					{(errors.length !== 0) &&
-						<ul className="errors">
-							{
-								errors.map((error) => <li className="error">{error}</li>)
-							}
-						</ul>
-					}
 				</div>
+				{(errors.length !== 0) &&
+				<ul className="errors">
+					{
+						errors.map((error) => <li className="error">{error}</li>)
+					}
+				</ul>
+				}
 			</div>
 	)
 }
