@@ -1,22 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import style from './style.css'
 import { svgIcon } from '../../../assets/svg'
 import { editableInputTypes } from '@testing-library/user-event/dist/utils'
 
-const LeftContent = () => {
-	const [mas, changeMas] = useState([
-		{
-			id: 1,
-			text: 'Категория 1',
-		},
-		{ id: 2, text: 'Категория 2' },
-		{ id: 3, text: 'Категория 3' },
-		{ id: 4, text: 'Категория 4' },
-		{ id: 5, text: 'Категория 5' },
-	])
+const LeftContent = ({categories}) => {
+
+	const [mas, changeMas] = useState([])
 	let [highlighted, setHighlighted] = useState(1)
 	let [editable, setEditable] = useState(-1)
 	let [categoryName, setCategoryName] = useState('')
+
+	useEffect(() => {
+		changeMas(categories.categories)
+	}, [categories])
 
 	const removeFunc = (id) => {
 		for (let i = 0; i < mas.length; i++) {

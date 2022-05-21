@@ -2,9 +2,9 @@ import {GET_CATEGORIES, GET_CATEGORIES_FAIL, GET_CATEGORIES_SUCCESS} from "../ty
 
 
 const defaultState = {
-    categories: {},
+    categories: [],
     error: '',
-    isLoading: false
+    isLoading: true
 }
 
 export default function categoriesReducer(state = defaultState, action) {
@@ -15,9 +15,13 @@ export default function categoriesReducer(state = defaultState, action) {
                 isLoading: true,
             }
         case GET_CATEGORIES_SUCCESS:
+            console.log('success get categories')
+            // console.log(action.payload)
+
+            const categories = categoriesFilter(action.payload)
             return {
                 ...state,
-                categories: {user: 1},
+                categories: categories,
                 isLoading: false
             }
         case GET_CATEGORIES_FAIL:
@@ -31,4 +35,12 @@ export default function categoriesReducer(state = defaultState, action) {
         default:
             return state
     }
+}
+
+const categoriesFilter = (categories) => {
+    let userId = localStorage.getItem('id_user')
+    const newArray = categories.filter((item) => {
+        return Number(item.userId.id) === Number(userId)
+    })
+    return newArray.map(item => ({id: item.id, text: item.title}))
 }
