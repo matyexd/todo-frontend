@@ -33,6 +33,13 @@ const LogInPage = (props) => {
 		props.clearAuthUserStore()
 	}
 
+
+	useEffect(() => {
+		if (localStorage.getItem('id_user')) {
+			navigate('/')
+		}
+	}, [])
+
 	useEffect(() => {
 		console.log(props.authUser)
 		const {user, isAuth, error, isLoading} = props.authUser

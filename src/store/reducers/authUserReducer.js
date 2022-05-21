@@ -20,6 +20,7 @@ export default function authUserReducer(state = defaultState, action) {
             }
         case AUTH_SUCCESS:
             console.log('lox')
+            localStorage.setItem('id_user', action.payload.id)
             return {
                 ...state,
                 user: {
@@ -49,6 +50,7 @@ export default function authUserReducer(state = defaultState, action) {
 
 
         case AUTH_CLEAR_STORE:
+            localStorage.removeItem('id_user')
             return {
                 ...state,
                 user: {

@@ -1,13 +1,19 @@
 import React from 'react';
 import cl from "./ModalWindow.module.css"
 import ava from "../../../../assets/svg/profile-logo.svg"
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
-const ModalWindow = ({active, setActive}) => {
+const ModalWindow = ({active, setActive, clearAuthUserStore}) => {
     const rootClasses = [cl.modal]
 
     if (active) {
         rootClasses.push(cl.active);
+    }
+
+    const navigate = useNavigate()
+    const handleClick = () => {
+        clearAuthUserStore()
+        navigate('/login')
     }
 
     return (
@@ -22,7 +28,7 @@ const ModalWindow = ({active, setActive}) => {
                         Денис Денисович
                     </div>
                     <div className={cl.quit}>
-                        <Link to={'/login'}>Выйти</Link>
+                        <div onClick={() => handleClick()}>Выйти</div>
 
                     </div>
                 </div>
