@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import cl from "./ModalWindow.module.css"
 import ava from "../../../../assets/svg/profile-logo.svg"
 import {Link, useNavigate} from "react-router-dom";
 
-const ModalWindow = ({active, setActive, clearAuthUserStore, userData}) => {
+const ModalWindow = ({active, setActive, clearAuthUserStore}) => {
+    let [editable, setEditable] = useState(0)
+    let [Name, setName] = useState('Денис Денисович')
+
+    const removeFunc = () => {
+        setName(Name);
+        setEditable("0")
+    }
+
     const rootClasses = [cl.modal]
 
     if (active) {
@@ -24,8 +32,16 @@ const ModalWindow = ({active, setActive, clearAuthUserStore, userData}) => {
                 </div>
                 <div className={cl.container}>
                     <img src={ava} style={{width: 300}}/>
-                    <div style={{fontSize: 40}}>
-                        {userData.user.username ? userData.user.username : 'Новый пользователь'}
+                    <div style={{fontSize: 30}}>
+                        {editable === 1?(
+                            <form className="text" id="form" onSubmit={() => removeFunc()}>
+                                <div className="">
+                                    <input className={cl.textinput} type="text" value={Name} onChange={(e) => setName(e.target.value)} />
+                                </div>
+                            </form>
+                        )
+                        :
+                            (<div className="name" onDoubleClick={() => { setName(Name); setEditable(1) }}>{Name}</div>)}
                     </div>
                     <div className={cl.quit}>
                         <div onClick={() => handleClick()}>Выйти</div>
