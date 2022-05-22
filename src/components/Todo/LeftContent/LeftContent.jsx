@@ -10,6 +10,15 @@ const LeftContent = ({categories}) => {
 	let [editable, setEditable] = useState(-1)
 	let [categoryName, setCategoryName] = useState('')
 
+	const addCategory = () => {
+		if (mas.length >= 1) {
+			changeMas([...mas, { id: mas[mas.length - 1].id + 1, text:"Категория " + (mas[mas.length - 1].id + 1)}])
+		}
+		else {
+			changeMas([...mas, {id: 1, text: "Категория 1"}])
+		}
+	}
+
 	useEffect(() => {
 		changeMas(categories.categories)
 	}, [categories])
@@ -84,7 +93,7 @@ const LeftContent = ({categories}) => {
 					)}
 				</div>
 			</div>
-			<div className='left-content-botContainer' onClick={() => changeMas([...mas, { id: mas[mas.length - 1].id + 1, text:"Категория " + (mas[mas.length - 1].id + 1)}])}>
+			<div className='left-content-botContainer' onClick={() => addCategory()}>
 				<div className='left-content__addIcon'>
 					<img src={svgIcon.plus} width={20} />
 				</div>
