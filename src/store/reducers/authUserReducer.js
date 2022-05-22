@@ -1,4 +1,4 @@
-import {AUTH_LOGIN, AUTH_SUCCESS, AUTH_FAIL, AUTH_CLEAR_STORE} from "../types/authUserType";
+import {AUTH_LOGIN, AUTH_SUCCESS, AUTH_FAIL, AUTH_CLEAR_STORE, GET_USER, GET_USER_FAIL, GET_USER_SUCCESS} from "../types/authUserType";
 
 const defaultState = {
     user: {
@@ -61,6 +61,31 @@ export default function authUserReducer(state = defaultState, action) {
                 isAuth: false,
                 error: '',
                 isLoading: false
+            }
+
+        case GET_USER:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case GET_USER_SUCCESS:
+            console.log('success get user')
+            console.log(action.payload)
+            return {
+                ...state,
+                isAuth: true,
+                error: '',
+                isLoading: false,
+                user: action.payload
+            }
+        case GET_USER_FAIL:
+            console.log('fail get user')
+            console.log(action.payload)
+            return {
+                ...state,
+                error: 'Что то не так',
+                isLoading: false,
+                isAuth: false,
             }
 
         default:
