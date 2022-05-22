@@ -3,7 +3,7 @@ import cl from "./ModalWindow.module.css"
 import ava from "../../../../assets/svg/profile-logo.svg"
 import {Link, useNavigate} from "react-router-dom";
 
-const ModalWindow = ({active, setActive, clearAuthUserStore}) => {
+const ModalWindow = ({active, setActive, clearAuthUserStore, userData}) => {
     const rootClasses = [cl.modal]
 
     if (active) {
@@ -25,7 +25,7 @@ const ModalWindow = ({active, setActive, clearAuthUserStore}) => {
                 <div className={cl.container}>
                     <img src={ava} style={{width: 300}}/>
                     <div style={{fontSize: 40}}>
-                        Денис Денисович
+                        {userData.user.username ? userData.user.username : 'Новый пользователь'}
                     </div>
                     <div className={cl.quit}>
                         <div onClick={() => handleClick()}>Выйти</div>
