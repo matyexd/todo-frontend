@@ -1,11 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import cl from "./ModalWindow.module.css"
 import ava from "../../../../assets/svg/profile-logo.svg"
 import {Link, useNavigate} from "react-router-dom";
 
 const ModalWindow = ({active, setActive, clearAuthUserStore, userData, clearCategoriesStore}) => {
     let [editable, setEditable] = useState(0)
-    let [Name, setName] = useState(userData.user.username)
+    let [Name, setName] = useState('')
+
+    useEffect(() => {
+        if (!userData.isLoading) {
+            setName(userData.user.username)
+        }
+    }, [userData])
+
+    console.log(userData)
 
     const removeFunc = () => {
         setName(Name);
