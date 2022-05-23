@@ -58,7 +58,9 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 				}
 			</div>
 			<div className='task-date' style={selected === id? {display: 'none'} : {}}>
-				{date ? 'до ' + date : ''}
+				<div style={active? {}:{marginTop: -20}}>
+					{date ? 'до ' + date : ''}
+				</div>
 			</div>
 			<div className='task-additionally' style={selected === id? {marginTop: 10} : {display: 'none'}}>
 				{editable === id ?

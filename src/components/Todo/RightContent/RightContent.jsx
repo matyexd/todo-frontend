@@ -170,13 +170,15 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 					<UiAccordion
 						title={completedTasks.length + ' задач выполнено'}
 						tasks={completedTasks}
+						selected={selected}
+						changeSelected={changeSelected}
+						deleteTask={deleteTask}
+						changeActive={changeActive}
 					/>
 				</div>
 				:
 				<div>Добавьте категорию</div>
 			}
-
-
 		</div>
 	)
 }
