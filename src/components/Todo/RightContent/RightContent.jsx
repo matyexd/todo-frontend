@@ -129,35 +129,41 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 					<ModalWindow active={modalActive} setActive={setModalActive} clearAuthUserStore={clearAuthUserStore} userData={userData} clearCategoriesStore={clearCategoriesStore}/>
 				</div>
 			</div>
-			{categories.categories.length > 0 ?
+			{categories.categories.length > -1 ?
 				<div>
-					<div style={{ marginTop: 40 }}>
-						{activeTasks.map(item => (
-							<TaskItem
-								key={item.id}
-								id={item.id}
-								title={item.title}
-								description={item.description}
-								date={item.date}
-								active={item.active}
-								selected={selected}
-								changeSelected={changeSelected}
-								deleteTask={deleteTask}
-								changeActive={changeActive}
-								editable={editable}
-								changeEditable={setEditable}
-								removeFuncTaskName={removeFuncTaskName}
-								taskName={taskName}
-								setTaskName={setTaskName}
-								descr={descr}
-								setDescr={setDescr}
-								removeFuncDescr={removeFuncDescr}
-								taskDate={taskDate}
-								setTaskDate={setTaskDate}
-								removeFuncDate={removeFuncDate}
-							/>
-						))}
-					</div>
+					{activeTasks.length !== 0 ?
+						<div style={{marginTop: 40}}>
+							{activeTasks.map(item => (
+								<TaskItem
+									key={item.id}
+									id={item.id}
+									title={item.title}
+									description={item.description}
+									date={item.date}
+									active={item.active}
+									selected={selected}
+									changeSelected={changeSelected}
+									deleteTask={deleteTask}
+									changeActive={changeActive}
+									editable={editable}
+									changeEditable={setEditable}
+									removeFuncTaskName={removeFuncTaskName}
+									taskName={taskName}
+									setTaskName={setTaskName}
+									descr={descr}
+									setDescr={setDescr}
+									removeFuncDescr={removeFuncDescr}
+									taskDate={taskDate}
+									setTaskDate={setTaskDate}
+									removeFuncDate={removeFuncDate}
+								/>
+							))}
+						</div>
+						:
+						<div className={'empty-tasks-block'}>
+							Нет активных задач
+						</div>
+					}
 					<div className='add-task-btn'>
 						<img src={svgIcon.plus} width={20} onClick={addTask}/>
 						<div style={{ marginLeft: 15 }} onClick={addTask}>
@@ -177,7 +183,9 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 					/>
 				</div>
 				:
-				<div>Добавьте категорию</div>
+				<div className={'tips'}>
+					Для начала работы создайте категорию
+				</div>
 			}
 		</div>
 	)

@@ -1,10 +1,10 @@
 .left-content-container {
-	margin-top: 40px;
 	font-family: 'Montserrat';
 	height: 100vh;
 	background-color: #f2f2f2;
 }
 .left-content-topContainer {
+	margin-top: 40px;
 	height: 85vh;
 	overflow-y: scroll;
 	position: fixed;
@@ -109,4 +109,12 @@
 	font-size: 18px;
 	margin-left: -5px;
 	font-weight: normal;
+}
+
+.tips-category {
+	width: 100%;
+	margin-top: 20px;
+	opacity: 0.5;
+	display: flex;
+	justify-content: center;
 }
