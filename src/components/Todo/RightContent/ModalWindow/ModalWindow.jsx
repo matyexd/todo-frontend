@@ -13,8 +13,6 @@ const ModalWindow = ({active, setActive, clearAuthUserStore, userData, clearCate
         }
     }, [userData])
 
-    console.log(userData)
-
     const removeFunc = () => {
         setName(Name);
         setEditable("0")
