@@ -59,7 +59,6 @@ export default function authUserReducer(state = defaultState, action) {
         case AUTH_CLEAR_STORE:
             localStorage.removeItem('id_user')
             return {
-                ...state,
                 user: {
                     id: -1,
                     email: '',

@@ -7,7 +7,7 @@ import { svgIcon } from '../../../assets/svg'
 import UiAccordion from '../../ui-kit/accordion/UiAccordion/UiAccordion'
 import ModalWindow from "./ModalWindow/ModalWindow";
 
-const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCategory, tasksLoading, clearCategoriesStore}) => {
+const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCategory, tasksLoading, clearCategoriesStore, categories}) => {
 
 	const Lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus rhoncus elit, a rhoncus mi commodo sit amet. Sed tellus nunc, vulputate sit amet viverra ultrices, venenatis vitae tortor. Mauris cursus augue quis nisi tempor eleifend. Mauris mi velit, facilisis ut pharetra eu, dignissim sed nisi. Praesent dapibus pharetra rutrum. Quisque accumsan malesuada nisl sed cursus. Etiam varius metus quam, non posuere diam sodales at. Aenean tincidunt turpis orci. Sed sed lectus ac urna lacinia efficitur nec nec dolor. Duis ex nulla, tempor id gravida iaculis, lobortis vel risus. Sed ac condimentum arcu, et tristique urna. Sed interdum ligula ut sem varius pretium. Vivamus in gravida nisl, id lobortis massa. Duis lacinia augue id ante vestibulum cursus.\n' +
 		'\n' +
@@ -16,6 +16,7 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 	const [tasks, setTasks] = useState([])
 	const [activeTasks, setActiveTasks] = useState([])
 	const [completedTasks, setCompletedTasks] = useState([])
+
 
 	useEffect(() => {
 		if (!tasksLoading) {
@@ -128,46 +129,54 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 					<ModalWindow active={modalActive} setActive={setModalActive} clearAuthUserStore={clearAuthUserStore} userData={userData} clearCategoriesStore={clearCategoriesStore}/>
 				</div>
 			</div>
-			<div style={{ marginTop: 40 }}>
-				{activeTasks.map(item => (
-					<TaskItem
-						key={item.id}
-						id={item.id}
-						title={item.title}
-						description={item.description}
-						date={item.date}
-						active={item.active}
-						selected={selected}
-						changeSelected={changeSelected}
-						deleteTask={deleteTask}
-						changeActive={changeActive}
-						editable={editable}
-						changeEditable={setEditable}
-						removeFuncTaskName={removeFuncTaskName}
-						taskName={taskName}
-						setTaskName={setTaskName}
-						descr={descr}
-						setDescr={setDescr}
-						removeFuncDescr={removeFuncDescr}
-						taskDate={taskDate}
-						setTaskDate={setTaskDate}
-						removeFuncDate={removeFuncDate}
+			{categories.categories.length > 0 ?
+				<div>
+					<div style={{ marginTop: 40 }}>
+						{activeTasks.map(item => (
+							<TaskItem
+								key={item.id}
+								id={item.id}
+								title={item.title}
+								description={item.description}
+								date={item.date}
+								active={item.active}
+								selected={selected}
+								changeSelected={changeSelected}
+								deleteTask={deleteTask}
+								changeActive={changeActive}
+								editable={editable}
+								changeEditable={setEditable}
+								removeFuncTaskName={removeFuncTaskName}
+								taskName={taskName}
+								setTaskName={setTaskName}
+								descr={descr}
+								setDescr={setDescr}
+								removeFuncDescr={removeFuncDescr}
+								taskDate={taskDate}
+								setTaskDate={setTaskDate}
+								removeFuncDate={removeFuncDate}
+							/>
+						))}
+					</div>
+					<div className='add-task-btn'>
+						<img src={svgIcon.plus} width={20} onClick={addTask}/>
+						<div style={{ marginLeft: 15 }} onClick={addTask}>
+							Добавить задачу
+						</div>
+					</div>
+					<div>
+						<hr color='#C4C4C4' size='1' style={{ marginTop: 30 }} />
+					</div>
+					<UiAccordion
+						title={completedTasks.length + ' задач выполнено'}
+						tasks={completedTasks}
 					/>
-				))}
-			</div>
-			<div className='add-task-btn'>
-				<img src={svgIcon.plus} width={20} onClick={addTask}/>
-				<div style={{ marginLeft: 15 }} onClick={addTask}>
-					Добавить задачу
 				</div>
-			</div>
-			<div>
-				<hr color='#C4C4C4' size='1' style={{ marginTop: 30 }} />
-			</div>
-			<UiAccordion
-				title={completedTasks.length + ' задач выполнено'}
-				tasks={completedTasks}
-			/>
+				:
+				<div>Добавьте категорию</div>
+			}
+
+
 		</div>
 	)
 }

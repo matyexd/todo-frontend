@@ -25,9 +25,10 @@ const HomePage = (props) => {
 	useEffect(() => {
 		if (!props.categories.isLoading) {
 			const newTasksArray = props.categories.categories.find(item => item.id === props.categories.activeCategory)
-			const newNewTasksArray = newTasksArray.tasks.map(item => {
+			console.log(props.categories.categories)
+			const newNewTasksArray = newTasksArray ? newTasksArray.tasks.map(item => {
 				return { id: item.id, title: item.title, description: !item.discription && '', date: item.endDate, active: item.status === "CREATED" ? true : false}
-			})
+			}) : []
 			setTasksLoading(false)
 			setTasks(newNewTasksArray)
 		}
@@ -35,6 +36,7 @@ const HomePage = (props) => {
 
 
 	return (
+
 		<div className='container'>
 			<div className='left-content'>
 				<LeftContent categories={props.categories} setActiveCategory={props.setActiveCategory}/>
@@ -47,6 +49,7 @@ const HomePage = (props) => {
 					setActiveCategory={props.setActiveCategory}
 					tasksLoading={tasksLoading}
 					clearCategoriesStore={props.clearCategoriesStore}
+					categories={props.categories}
 				/>
 			</div>
 		</div>

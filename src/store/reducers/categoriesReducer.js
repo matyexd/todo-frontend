@@ -30,7 +30,7 @@ export default function categoriesReducer(state = defaultState, action) {
                 ...state,
                 categories: categories,
                 isLoading: false,
-                activeCategory: categories ? categories[0].id : -1
+                activeCategory: categories.length > 0 ? categories[0].id : -1
             }
         case GET_CATEGORIES_FAIL:
             console.log('fail get categories')
