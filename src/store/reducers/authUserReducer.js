@@ -16,6 +16,13 @@ export default function authUserReducer(state = defaultState, action) {
         case AUTH_LOGIN:
             return {
                 ...state,
+                user: {
+                    id: -1,
+                    email: '',
+                    username: '',
+                },
+                isAuth: false,
+                error: '',
                 isLoading: true,
             }
         case AUTH_SUCCESS:
@@ -52,7 +59,6 @@ export default function authUserReducer(state = defaultState, action) {
         case AUTH_CLEAR_STORE:
             localStorage.removeItem('id_user')
             return {
-                ...state,
                 user: {
                     id: -1,
                     email: '',
