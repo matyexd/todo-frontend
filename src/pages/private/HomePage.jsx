@@ -11,6 +11,7 @@ import {
 	getCategories,
 	setActiveCategoryActive, toggleLoadingCategory, updateCategoryAction
 } from "../../store/actions/categoriesAction";
+import {addTaskAction, updateTaskAction, deleteTaskAction} from "../../store/actions/tasksAction";
 
 const HomePage = (props) => {
 
@@ -63,6 +64,9 @@ const HomePage = (props) => {
 					tasksLoading={tasksLoading}
 					clearCategoriesStore={props.clearCategoriesStore}
 					categories={props.categories}
+					addTaskOnServer={props.addTask}
+					deleteTaskOnServer={props.deleteTask}
+					updateTaskOnServer={props.updateTask}
 				/>
 			</div>
 		</div>
@@ -87,7 +91,10 @@ const mapDispatchToProps = (dispatch) => {
 		addCategory: (userId, title) => dispatch(addCategoryAction(userId, title)),
 		deleteCategory: (id) => dispatch(deleteCategoryAction(id)),
 		updateCategory: (id, title) => dispatch(updateCategoryAction(id, title)),
-		toggleLoadingCategory: () => dispatch(toggleLoadingCategory())
+		toggleLoadingCategory: () => dispatch(toggleLoadingCategory()),
+		addTask: (title, description, categoryId, endDate) => dispatch(addTaskAction(title, description, categoryId, endDate)),
+		deleteTask: (id) => dispatch(deleteTaskAction(id)),
+		updateTask: (id, title, description, endDate) => dispatch(updateTaskAction(id, title, description, endDate))
 	}
 }
 

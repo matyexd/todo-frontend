@@ -7,7 +7,18 @@ import { svgIcon } from '../../../assets/svg'
 import UiAccordion from '../../ui-kit/accordion/UiAccordion/UiAccordion'
 import ModalWindow from "./ModalWindow/ModalWindow";
 
-const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCategory, tasksLoading, clearCategoriesStore, categories}) => {
+const RightContent = ({
+  	clearAuthUserStore,
+  	userData,
+  	tasksFromDB,
+  	setActiveCategory,
+  	tasksLoading,
+  	clearCategoriesStore,
+  	categories,
+	addTaskOnServer,
+	deleteTaskOnServer,
+	updateTaskOnServer
+}) => {
 
 	const Lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus rhoncus elit, a rhoncus mi commodo sit amet. Sed tellus nunc, vulputate sit amet viverra ultrices, venenatis vitae tortor. Mauris cursus augue quis nisi tempor eleifend. Mauris mi velit, facilisis ut pharetra eu, dignissim sed nisi. Praesent dapibus pharetra rutrum. Quisque accumsan malesuada nisl sed cursus. Etiam varius metus quam, non posuere diam sodales at. Aenean tincidunt turpis orci. Sed sed lectus ac urna lacinia efficitur nec nec dolor. Duis ex nulla, tempor id gravida iaculis, lobortis vel risus. Sed ac condimentum arcu, et tristique urna. Sed interdum ligula ut sem varius pretium. Vivamus in gravida nisl, id lobortis massa. Duis lacinia augue id ante vestibulum cursus.\n' +
 		'\n' +
