@@ -57,7 +57,7 @@
 }
 
 .accordion-toggle div {
-	margin: 0;
-	pointer-events: none;
+	margin-top: 0;
+	/*pointer-events: none;*/
 	line-height: 1.3;
 }

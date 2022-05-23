@@ -3,7 +3,7 @@ import './Accordion.css'
 import { svgIcon } from '../../../../assets/svg'
 import TaskItem from "../../../Todo/RightContent/TaskItem/TaskItem";
 
-export default function UiAccordion({ title = 'hello', tasks}) {
+export default function UiAccordion({ title = 'hello', tasks, changeActive, changeSelected, deleteTask, selected}) {
 	const [toggle, setToggle] = useState(false)
 	const [heightEl, setHeightEl] = useState('200px')
 
@@ -29,7 +29,17 @@ export default function UiAccordion({ title = 'hello', tasks}) {
 				{tasks.map(item => (
 					<div key={item.id} aria-hidden={toggle ? 'true' : 'false'}>
 						{console.log(item)}
-						<TaskItem id={item.id} title={item.title} description={item.description} date={item.date} active={item.active}/>
+						<TaskItem
+							id={item.id}
+							title={item.title}
+							description={item.description}
+							date={item.date}
+							active={item.active}
+							selected={selected}
+							changeSelected={changeSelected}
+							deleteTask={deleteTask}
+							changeActive={changeActive}
+						/>
 					</div>
 				))}
 			</div>
