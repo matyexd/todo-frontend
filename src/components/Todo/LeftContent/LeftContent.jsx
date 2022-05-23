@@ -4,7 +4,6 @@ import { svgIcon } from '../../../assets/svg'
 import { editableInputTypes } from '@testing-library/user-event/dist/utils'
 
 const LeftContent = ({categories}) => {
-
 	const [mas, changeMas] = useState([])
 	let [highlighted, setHighlighted] = useState(1)
 	let [editable, setEditable] = useState(-1)
@@ -21,6 +20,10 @@ const LeftContent = ({categories}) => {
 
 	useEffect(() => {
 		changeMas(categories.categories)
+		if (!categories.categories.isLoading) {
+			setHighlighted(categories.categories[0]?.id)
+		}
+
 	}, [categories])
 
 	const removeFunc = (id) => {

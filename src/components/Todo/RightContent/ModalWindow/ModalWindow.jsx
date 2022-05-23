@@ -3,9 +3,9 @@ import cl from "./ModalWindow.module.css"
 import ava from "../../../../assets/svg/profile-logo.svg"
 import {Link, useNavigate} from "react-router-dom";
 
-const ModalWindow = ({active, setActive, clearAuthUserStore}) => {
+const ModalWindow = ({active, setActive, clearAuthUserStore, userData}) => {
     let [editable, setEditable] = useState(0)
-    let [Name, setName] = useState('Денис Денисович')
+    let [Name, setName] = useState(userData.user.username)
 
     const removeFunc = () => {
         setName(Name);

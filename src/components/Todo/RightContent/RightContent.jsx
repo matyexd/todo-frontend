@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import style from './style.css'
 import ava from '../../../assets/svg/profile-logo.svg'
 import { UiAvatar } from '../../ui-kit'
@@ -7,30 +7,21 @@ import { svgIcon } from '../../../assets/svg'
 import UiAccordion from '../../ui-kit/accordion/UiAccordion/UiAccordion'
 import ModalWindow from "./ModalWindow/ModalWindow";
 
-const RightContent = ({clearAuthUserStore, userData}) => {
+const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCategory, tasksLoading}) => {
 
 	const Lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus rhoncus elit, a rhoncus mi commodo sit amet. Sed tellus nunc, vulputate sit amet viverra ultrices, venenatis vitae tortor. Mauris cursus augue quis nisi tempor eleifend. Mauris mi velit, facilisis ut pharetra eu, dignissim sed nisi. Praesent dapibus pharetra rutrum. Quisque accumsan malesuada nisl sed cursus. Etiam varius metus quam, non posuere diam sodales at. Aenean tincidunt turpis orci. Sed sed lectus ac urna lacinia efficitur nec nec dolor. Duis ex nulla, tempor id gravida iaculis, lobortis vel risus. Sed ac condimentum arcu, et tristique urna. Sed interdum ligula ut sem varius pretium. Vivamus in gravida nisl, id lobortis massa. Duis lacinia augue id ante vestibulum cursus.\n' +
 		'\n' +
 		'Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce malesuada aliquam turpis, eget dignissim justo facilisis in. Donec lorem tortor, tempor id arcu ut, aliquam vulputate erat. Proin pharetra bibendum erat, at interdum eros semper ac. Curabitur rhoncus elit orci, quis volutpat eros hendrerit nec. Etiam ultricies neque in tellus vehicula, vitae porttitor mi commodo. Proin posuere purus vitae suscipit efficitur. Fusce lorem lorem, dictum eget commodo vel, malesuada vitae augue. Pellentesque finibus, nulla at euismod maximus, odio dolor cursus mi, vel pharetra sapien mi quis orci. Praesent non enim odio. Mauris ac ex id lacus consequat cursus.'
 
-	const [tasks, setTasks] = useState([
-		{ id: 1, title: 'Захватить мир', description: Lorem + Lorem + Lorem, date: '28 января', active: true},
-		{ id: 2, title: 'Помыть посуду', description: Lorem, date: '29 января', active: true},
-		{ id: 3, title: 'Убраться в комнате', description: Lorem, date: '', active: true},
-		{ id: 4, title: 'Купить самолет', description: Lorem, date: '28 января', active: true},
-		{ id: 5, title: 'Угнать машину', description: Lorem, date: '', active: true},
-		{ id: 101, title: 'Купить танк', description: 'Описание задачи', date: '20 апреля', active: false },
-		{ id: 102, title: 'Починить книгу', description: 'Описание задачи', date: '20 апреля', active: false },
-		{ id: 103, title: 'Организовать бой носорогов', description: 'Описание задачи', date: '20 апреля', active: false },
-		{ id: 104, title: 'Заказать такси', description: 'Описание задачи', date: '', active: false },
-		{ id: 105, title: 'Почитать старших', description: 'Описание задачи', date: '20 апреля', active: false },
-		{ id: 106, title: 'Устроиться на работу', description: 'Описание задачи', date: '20 апреля', active: false },
-		{ id: 107, title: 'Взломать сейф', description: 'Описание задачи', date: '20 апреля', active: false },
-		{ id: 108, title: 'Покоримить крокодила', description: 'Описание задачи', date: '20 апреля', active: false },
-		{ id: 109, title: 'Ловить мух', description: 'Описание задачи', date: '', active: false },
-		{ id: 110, title: 'Покрасить зебру', description: 'Описание задачи', date: '20 апреля', active: false },
-		{ id: 111, title: 'Сходить в магазин', description: 'Описание задачи', date: '20 апреля', active: false },
-	])
+	const [tasks, setTasks] = useState([])
+
+	useEffect(() => {
+		if (!tasksLoading) {
+			// setTasks(tasksFromDB)
+			console.log(tasks)
+			setTasks(tasksFromDB)
+		}
+	}, [tasksFromDB])
 
 	let activeTasks = tasks.filter(item => item.active === true)
 	let completedTasks = tasks.filter(item => item.active !== true)
