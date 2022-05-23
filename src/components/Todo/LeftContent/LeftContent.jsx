@@ -3,25 +3,36 @@ import style from './style.css'
 import { svgIcon } from '../../../assets/svg'
 import { editableInputTypes } from '@testing-library/user-event/dist/utils'
 
-const LeftContent = ({categories, setActiveCategory}) => {
+const LeftContent = ({categories, setActiveCategory, addCategory, deleteCategory, updateCategory, getCategories, toggleLoadingCategory}) => {
 	const [mas, changeMas] = useState([])
 	let [highlighted, setHighlighted] = useState(1)
 	let [editable, setEditable] = useState(-1)
 	let [categoryName, setCategoryName] = useState('')
+	const [addCategoryLoading, setAddCategoryLoading] = useState(false)
 
-	const addCategory = () => {
+	const handleAddCategory = () => {
+		let text = 'Новая категория'
 		if (mas.length >= 1) {
-			changeMas([...mas, { id: mas[mas.length - 1].id + 1, text:"Категория " + (mas[mas.length - 1].id + 1)}])
+			changeMas([...mas, { id: mas[mas.length - 1].id + 1, text: text}])
 		}
 		else {
-			changeMas([...mas, {id: 1, text: "Категория 1"}])
+			changeMas([...mas, {id: 1, text: text}])
 		}
+		addCategory(localStorage.getItem('id_user'), text)
+		setAddCategoryLoading(true)
 	}
 
+	console.log(categories)
+
 	useEffect(() => {
-		changeMas(categories.categories)
-		if (!categories.categories.isLoading) {
+		if (!categories.isLoading && !addCategoryLoading) {
 			setHighlighted(categories.activeCategory)
+			changeMas(categories.categories)
+		}
+		if (!categories.isLoadingAddCategory) {
+			toggleLoadingCategory()
+			getCategories()
+			setAddCategoryLoading(false)
 		}
 
 	}, [categories])
@@ -29,7 +40,10 @@ const LeftContent = ({categories, setActiveCategory}) => {
 	const removeFunc = (id) => {
 		for (let i = 0; i < mas.length; i++) {
 			if (mas[i].id === id) {
-				mas[i].text = categoryName;
+				if (categoryName) {
+					updateCategory(id, categoryName)
+					mas[i].text = categoryName;
+				}
 			}
 		}
 		changeMas([...mas]);
@@ -44,7 +58,12 @@ const LeftContent = ({categories, setActiveCategory}) => {
 
 	const handleChangeCategory = (id) => {
 		setHighlighted(id)
-		setActiveCategory(id)
+		if (!id) {
+			setActiveCategory(-1)
+		} else {
+			setActiveCategory(id)
+		}
+
 	}
 
 	return (
@@ -80,6 +99,7 @@ const LeftContent = ({categories, setActiveCategory}) => {
 													mas.splice(i--, 1);
 												}
 											}
+											deleteCategory(item.id)
 											changeMas([...mas])
 										}
 									}}
@@ -101,7 +121,7 @@ const LeftContent = ({categories, setActiveCategory}) => {
 					)}
 				</div>
 			</div>
-			<div className='left-content-botContainer' onClick={() => addCategory()}>
+			<div className='left-content-botContainer' onClick={() => handleAddCategory()}>
 				<div className='left-content__addIcon'>
 					<img src={svgIcon.plus} width={20} />
 				</div>

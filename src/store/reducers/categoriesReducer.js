@@ -1,9 +1,18 @@
 import {
+    ADD_CATEGORY,
     CLEAR_CATEGORIES_STORE,
     GET_CATEGORIES,
     GET_CATEGORIES_FAIL,
     GET_CATEGORIES_SUCCESS,
-    SET_ACTIVE_CATEGORY
+    SET_ACTIVE_CATEGORY,
+    ADD_CATEGORY_SUCCESS,
+    ADD_CATEGORY_FAIL,
+    DELETE_CATEGORY_SUCCESS,
+    DELETE_CATEGORY,
+    DELETE_CATEGORY_FAIL,
+    UPDATE_CATEGORY_FAIL,
+    UPDATE_CATEGORY,
+    UPDATE_CATEGORY_SUCCESS, TOGGLE_LOADING_CATEGORY
 } from "../types/categoriesType";
 
 
@@ -11,6 +20,7 @@ const defaultState = {
     categories: [],
     error: '',
     isLoading: true,
+    isLoadingAddCategory: true,
     activeCategory: -1,
 }
 
@@ -30,7 +40,6 @@ export default function categoriesReducer(state = defaultState, action) {
                 ...state,
                 categories: categories,
                 isLoading: false,
-                activeCategory: categories.length > 0 ? categories[0].id : -1
             }
         case GET_CATEGORIES_FAIL:
             console.log('fail get categories')
@@ -50,7 +59,71 @@ export default function categoriesReducer(state = defaultState, action) {
                 categories: [],
                 error: '',
                 isLoading: true,
+                isLoadingAddCategory: true,
                 activeCategory: -1,
+            }
+        case ADD_CATEGORY:
+            return {
+                ...state,
+                isLoading: true,
+                isLoadingAddCategory: true,
+                error: ''
+            }
+        case ADD_CATEGORY_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isLoadingAddCategory: false,
+                error: ''
+            }
+        case ADD_CATEGORY_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                isLoadingAddCategory: false,
+                error: 'Что-то пошло не так'
+            }
+        case UPDATE_CATEGORY:
+            return {
+                ...state,
+                isLoading: true,
+                error: ''
+            }
+        case UPDATE_CATEGORY_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                error: ''
+            }
+        case UPDATE_CATEGORY_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                error: 'Что-то пошло не так'
+            }
+        case DELETE_CATEGORY:
+            return {
+                ...state,
+                isLoading: true,
+                error: ''
+            }
+        case DELETE_CATEGORY_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                error: '',
+                activeCategory: -1,
+            }
+        case DELETE_CATEGORY_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                error: 'Что-то пошло не так'
+            }
+        case TOGGLE_LOADING_CATEGORY:
+            return {
+                ...state,
+                isLoadingAddCategory: true,
             }
         default:
             return state
