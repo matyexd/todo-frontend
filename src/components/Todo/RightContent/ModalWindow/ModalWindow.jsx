@@ -3,7 +3,7 @@ import cl from "./ModalWindow.module.css"
 import ava from "../../../../assets/svg/profile-logo.svg"
 import {Link, useNavigate} from "react-router-dom";
 
-const ModalWindow = ({active, setActive, clearAuthUserStore, userData}) => {
+const ModalWindow = ({active, setActive, clearAuthUserStore, userData, clearCategoriesStore}) => {
     let [editable, setEditable] = useState(0)
     let [Name, setName] = useState(userData.user.username)
 
@@ -21,6 +21,7 @@ const ModalWindow = ({active, setActive, clearAuthUserStore, userData}) => {
     const navigate = useNavigate()
     const handleClick = () => {
         clearAuthUserStore()
+        clearCategoriesStore()
         navigate('/login')
     }
 

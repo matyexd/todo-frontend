@@ -7,13 +7,15 @@ import { svgIcon } from '../../../assets/svg'
 import UiAccordion from '../../ui-kit/accordion/UiAccordion/UiAccordion'
 import ModalWindow from "./ModalWindow/ModalWindow";
 
-const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCategory, tasksLoading}) => {
+const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCategory, tasksLoading, clearCategoriesStore}) => {
 
 	const Lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus rhoncus elit, a rhoncus mi commodo sit amet. Sed tellus nunc, vulputate sit amet viverra ultrices, venenatis vitae tortor. Mauris cursus augue quis nisi tempor eleifend. Mauris mi velit, facilisis ut pharetra eu, dignissim sed nisi. Praesent dapibus pharetra rutrum. Quisque accumsan malesuada nisl sed cursus. Etiam varius metus quam, non posuere diam sodales at. Aenean tincidunt turpis orci. Sed sed lectus ac urna lacinia efficitur nec nec dolor. Duis ex nulla, tempor id gravida iaculis, lobortis vel risus. Sed ac condimentum arcu, et tristique urna. Sed interdum ligula ut sem varius pretium. Vivamus in gravida nisl, id lobortis massa. Duis lacinia augue id ante vestibulum cursus.\n' +
 		'\n' +
 		'Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce malesuada aliquam turpis, eget dignissim justo facilisis in. Donec lorem tortor, tempor id arcu ut, aliquam vulputate erat. Proin pharetra bibendum erat, at interdum eros semper ac. Curabitur rhoncus elit orci, quis volutpat eros hendrerit nec. Etiam ultricies neque in tellus vehicula, vitae porttitor mi commodo. Proin posuere purus vitae suscipit efficitur. Fusce lorem lorem, dictum eget commodo vel, malesuada vitae augue. Pellentesque finibus, nulla at euismod maximus, odio dolor cursus mi, vel pharetra sapien mi quis orci. Praesent non enim odio. Mauris ac ex id lacus consequat cursus.'
 
 	const [tasks, setTasks] = useState([])
+	const [activeTasks, setActiveTasks] = useState([])
+	const [completedTasks, setCompletedTasks] = useState([])
 
 	useEffect(() => {
 		if (!tasksLoading) {
@@ -23,8 +25,11 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 		}
 	}, [tasksFromDB])
 
-	let activeTasks = tasks.filter(item => item.active === true)
-	let completedTasks = tasks.filter(item => item.active !== true)
+	useEffect(() => {
+		setActiveTasks(tasks.filter(item => item.active === true))
+		setCompletedTasks(tasks.filter(item => item.active !== true))
+	}, [tasks])
+
 
 	const [modalActive, setModalActive] = useState(false)
 	const [selected, setSelected] = useState(0)
@@ -77,22 +82,39 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 	}
 
 	const changeActive = (id) => {
-		for (let item of tasks) {
+		// for (let item of tasks) {
+		// 	if (item.id === id) {
+		// 		if (item.active === true) {
+		// 			console.log('ya ebal')
+		// 			item.active = !item.active
+		// 			completedTasks.unshift(item)
+		// 			activeTasks = activeTasks.filter(item => item.id !== id)
+		// 			console.log(completedTasks)
+		// 			break
+		// 		}
+		// 		else {
+		// 			item.active = !item.active
+		// 			activeTasks.unshift(item)
+		// 			completedTasks = completedTasks.filter(item => item.id !== id)
+		// 			break
+		// 		}
+		// 	}
+		// }
+
+		const newArray = tasks.map((item) => {
 			if (item.id === id) {
 				if (item.active === true) {
-					item.active = !item.active
-					completedTasks.unshift(item)
-					activeTasks = activeTasks.filter(item => item.id !== id)
-					break
+					return {...item, active: false}
+				} else {
+					return {...item, active: true}
 				}
-				else {
-					item.active = !item.active
-					activeTasks.unshift(item)
-					completedTasks = completedTasks.filter(item => item.id !== id)
-					break
-				}
+			} else {
+				return item
 			}
-		}
+		})
+
+		setTasks(newArray)
+
 	}
 
 	return (
@@ -103,7 +125,7 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 					<div onClick={() => setModalActive(true)}>
 						<UiAvatar src={ava} size={73} />
 					</div>
-					<ModalWindow active={modalActive} setActive={setModalActive} clearAuthUserStore={clearAuthUserStore} userData={userData}/>
+					<ModalWindow active={modalActive} setActive={setModalActive} clearAuthUserStore={clearAuthUserStore} userData={userData} clearCategoriesStore={clearCategoriesStore}/>
 				</div>
 			</div>
 			<div style={{ marginTop: 40 }}>

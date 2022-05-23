@@ -1,4 +1,5 @@
 import {
+    CLEAR_CATEGORIES_STORE,
     GET_CATEGORIES,
     GET_CATEGORIES_FAIL,
     GET_CATEGORIES_SUCCESS,
@@ -24,6 +25,8 @@ export const setActiveCategoryActive = (id) => ({
     type: SET_ACTIVE_CATEGORY,
     payload: id
 })
+
+export const clearCategoriesStoreAction = () => ({type: CLEAR_CATEGORIES_STORE})
 
 export const getCategoriesFetch = () => {
     return $api.get('/categories')

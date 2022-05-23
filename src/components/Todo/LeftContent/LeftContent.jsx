@@ -3,7 +3,7 @@ import style from './style.css'
 import { svgIcon } from '../../../assets/svg'
 import { editableInputTypes } from '@testing-library/user-event/dist/utils'
 
-const LeftContent = ({categories}) => {
+const LeftContent = ({categories, setActiveCategory}) => {
 	const [mas, changeMas] = useState([])
 	let [highlighted, setHighlighted] = useState(1)
 	let [editable, setEditable] = useState(-1)
@@ -21,7 +21,7 @@ const LeftContent = ({categories}) => {
 	useEffect(() => {
 		changeMas(categories.categories)
 		if (!categories.categories.isLoading) {
-			setHighlighted(categories.categories[0]?.id)
+			setHighlighted(categories.activeCategory)
 		}
 
 	}, [categories])
@@ -40,6 +40,11 @@ const LeftContent = ({categories}) => {
 		if (event.key === 'Enter') {
 			console.log('enter press here! ')
 		}
+	}
+
+	const handleChangeCategory = (id) => {
+		setHighlighted(id)
+		setActiveCategory(id)
 	}
 
 	return (
@@ -85,7 +90,7 @@ const LeftContent = ({categories}) => {
 							<div
 								key={item.id}
 								className='left-content__item'
-								onClick={() => setHighlighted(item.id)}
+								onClick={() => handleChangeCategory(item.id)}
 							>
 								<div className='left-content__itemImg'>
 									<img src={svgIcon.dot} width={12} />

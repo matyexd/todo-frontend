@@ -1,4 +1,5 @@
 import {
+    CLEAR_CATEGORIES_STORE,
     GET_CATEGORIES,
     GET_CATEGORIES_FAIL,
     GET_CATEGORIES_SUCCESS,
@@ -43,6 +44,13 @@ export default function categoriesReducer(state = defaultState, action) {
             return {
                 ...state,
                 activeCategory: action.payload
+            }
+        case CLEAR_CATEGORIES_STORE:
+            return {
+                categories: [],
+                error: '',
+                isLoading: true,
+                activeCategory: -1,
             }
         default:
             return state
