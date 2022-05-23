@@ -3,15 +3,27 @@ import style from './style.css'
 import { svgIcon } from '../../../assets/svg'
 import { editableInputTypes } from '@testing-library/user-event/dist/utils'
 
-const LeftContent = ({categories}) => {
-
+const LeftContent = ({categories, setActiveCategory}) => {
 	const [mas, changeMas] = useState([])
 	let [highlighted, setHighlighted] = useState(1)
 	let [editable, setEditable] = useState(-1)
 	let [categoryName, setCategoryName] = useState('')
 
+	const addCategory = () => {
+		if (mas.length >= 1) {
+			changeMas([...mas, { id: mas[mas.length - 1].id + 1, text:"Категория " + (mas[mas.length - 1].id + 1)}])
+		}
+		else {
+			changeMas([...mas, {id: 1, text: "Категория 1"}])
+		}
+	}
+
 	useEffect(() => {
 		changeMas(categories.categories)
+		if (!categories.categories.isLoading) {
+			setHighlighted(categories.activeCategory)
+		}
+
 	}, [categories])
 
 	const removeFunc = (id) => {
@@ -28,6 +40,11 @@ const LeftContent = ({categories}) => {
 		if (event.key === 'Enter') {
 			console.log('enter press here! ')
 		}
+	}
+
+	const handleChangeCategory = (id) => {
+		setHighlighted(id)
+		setActiveCategory(id)
 	}
 
 	return (
@@ -73,7 +90,7 @@ const LeftContent = ({categories}) => {
 							<div
 								key={item.id}
 								className='left-content__item'
-								onClick={() => setHighlighted(item.id)}
+								onClick={() => handleChangeCategory(item.id)}
 							>
 								<div className='left-content__itemImg'>
 									<img src={svgIcon.dot} width={12} />
@@ -84,7 +101,7 @@ const LeftContent = ({categories}) => {
 					)}
 				</div>
 			</div>
-			<div className='left-content-botContainer' onClick={() => changeMas([...mas, { id: mas[mas.length - 1].id + 1, text:"Категория " + (mas[mas.length - 1].id + 1)}])}>
+			<div className='left-content-botContainer' onClick={() => addCategory()}>
 				<div className='left-content__addIcon'>
 					<img src={svgIcon.plus} width={20} />
 				</div>

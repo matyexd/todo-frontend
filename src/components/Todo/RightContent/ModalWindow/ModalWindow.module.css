@@ -6,7 +6,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0, 0.26);
+    background-color: rgba(0, 0, 0, 0.26);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,7 +33,7 @@
     height: 50px;
 }
 
-.touchableArea:hover .close{
+.touchableArea:hover .close {
     opacity: 1;
 }
 
@@ -44,7 +44,8 @@
     opacity: 0.3;
 }
 
-.close:before, .close:after {
+.close:before,
+.close:after {
     position: absolute;
     content: ' ';
     height: 33px;
@@ -67,10 +68,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .container div {
-    margin-top: 50px;
+    margin-top: 25px;
 }
 
 .quit {
@@ -82,3 +84,11 @@
     cursor: pointer;
 }
 
+.textinput {
+    height: 30px;
+    padding-left: 5px;
+    border-radius: 5px;
+    font-size: 30px;
+    margin-left: -5px;
+    font-weight: normal;
+}

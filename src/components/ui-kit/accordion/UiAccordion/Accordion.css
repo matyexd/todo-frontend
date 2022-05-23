@@ -32,7 +32,7 @@
 }
 
 .accordion-toggle {
-	max-height: 300px;
+	max-height: 600px;
 	overflow: hidden;
 	font-size: 18px;
 	opacity: 0;

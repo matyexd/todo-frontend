@@ -73,9 +73,11 @@
 	&-description {
 		margin-left: -10px;
 		&-textarea {
+			resize: none;
 			margin-left: -10px;
 			width: 97.6%;
-			height: 500px;
+			min-height: 200px;
+			max-height: 500px;
 			padding: 20px;
 			font-size: 16px;
 			font-family: 'Roboto', serif;

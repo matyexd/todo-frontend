@@ -5,13 +5,10 @@ import TaskItem from "../../../Todo/RightContent/TaskItem/TaskItem";
 
 export default function UiAccordion({ title = 'hello', tasks}) {
 	const [toggle, setToggle] = useState(false)
-	const [heightEl, setHeightEl] = useState()
+	const [heightEl, setHeightEl] = useState('200px')
 
 	const refHeight = useRef()
 
-	useEffect(() => {
-		setHeightEl(`${refHeight.current.scrollHeight}px`)
-	}, [])
 
 	const toggleState = () => {
 		setToggle(!toggle)
@@ -31,6 +28,7 @@ export default function UiAccordion({ title = 'hello', tasks}) {
 			>
 				{tasks.map(item => (
 					<div key={item.id} aria-hidden={toggle ? 'true' : 'false'}>
+						{console.log(item)}
 						<TaskItem id={item.id} title={item.title} description={item.description} date={item.date} active={item.active}/>
 					</div>
 				))}
