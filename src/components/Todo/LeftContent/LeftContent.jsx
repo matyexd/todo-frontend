@@ -72,54 +72,64 @@ const LeftContent = ({categories, setActiveCategory, addCategory, deleteCategory
 				<div className='left-content__top'>
 					<div className='left-content__title'>Список категорий</div>
 				</div>
-				<div className='left-content__middle'>
-					{mas.map(item =>
-						item.id === highlighted ? (
-							<div className='left-content__item__highlighted' style={{ backgroundColor: '#DBDBDB' }} key={item.id}>
-								<div>
-									<div className='left-content__flex-box'>
-										<div className='left-content__itemImg'>
-											<img src={svgIcon.dot} width={12} />
+				{mas.length !== 0 ?
+					<div className='left-content__middle'>
+						{mas.map(item =>
+							item.id === highlighted ? (
+								<div className='left-content__item__highlighted' style={{backgroundColor: '#DBDBDB'}}
+									 key={item.id}>
+									<div>
+										<div className='left-content__flex-box'>
+											<div className='left-content__itemImg'>
+												<img src={svgIcon.dot} width={12}/>
+											</div>
+											{item.id === editable ? (
+												<form className="item-text" id="form"
+													  onSubmit={() => removeFunc(item.id)}>
+													<input className='item-text-input' type="text" value={categoryName}
+														   onChange={(e) => setCategoryName(e.target.value)}/>
+												</form>
+											) : (
+												<div className="item-text" onDoubleClick={() => {
+													setCategoryName(item.text);
+													setEditable(item.id)
+												}}>{item.text}</div>)
+											}
 										</div>
-										{item.id === editable ? (
-											<form className="item-text" id="form" onSubmit={() => removeFunc(item.id)}>
-												<input className='item-text-input' type="text" value={categoryName} onChange={(e) => setCategoryName(e.target.value)}/>
-											</form>
-										) : (
-											<div className="item-text" onDoubleClick={() => { setCategoryName(item.text); setEditable(item.id) } }>{item.text}</div>)
-										}
+									</div>
+									<div
+										className="close"
+										onClick={() => {
+											if (window.confirm('Вы точно хотите удалить эту категорию?')) {
+												for (let i = 0; i < mas.length; i++) {
+													if (mas[i].id === item.id) {
+														mas.splice(i--, 1);
+													}
+												}
+                        deleteCategory(item.id)
+												changeMas([...mas])
+											}
+										}}
+									>
 									</div>
 								</div>
+							) : (
 								<div
-									className="close"
-									onClick= {() => {
-										if (window.confirm('Вы точно хотите удалить эту категорию?')) {
-											for (let i = 0; i < mas.length; i++) {
-												if (mas[i].id === item.id) {
-													mas.splice(i--, 1);
-												}
-											}
-											deleteCategory(item.id)
-											changeMas([...mas])
-										}
-									}}
+									key={item.id}
+									className='left-content__item'
+									onClick={() => handleChangeCategory(item.id)}
 								>
+									<div className='left-content__itemImg'>
+										<img src={svgIcon.dot} width={12}/>
+									</div>
+									{item.text}
 								</div>
-							</div>
-						) : (
-							<div
-								key={item.id}
-								className='left-content__item'
-								onClick={() => handleChangeCategory(item.id)}
-							>
-								<div className='left-content__itemImg'>
-									<img src={svgIcon.dot} width={12} />
-								</div>
-								{item.text}
-							</div>
-						)
-					)}
-				</div>
+							)
+						)}
+					</div>
+					:
+					<div className={'tips-category'}>Список пуст</div>
+				}
 			</div>
 			<div className='left-content-botContainer' onClick={() => handleAddCategory()}>
 				<div className='left-content__addIcon'>

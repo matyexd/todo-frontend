@@ -138,3 +138,17 @@
 	background-color: #F1F1F1;
 }
 
+.tips {
+	height: 500px;
+	opacity: 0.5;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.empty-tasks-block {
+	margin-top: 40px;
+	margin-left: 0px;
+	opacity: 0.5;
+}
