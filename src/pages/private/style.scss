@@ -1,14 +1,14 @@
 .container {
 	display: flex;
+	height: 100%;
 }
 
 .left-content {
 	width: 440px;
-	height: 100vh;
 	background-color: #f2f2f2;
 }
 
 .right-content {
 	width: calc(100% - 440px);
-	height: 100vh;
+	//height: 100vh;
 }
