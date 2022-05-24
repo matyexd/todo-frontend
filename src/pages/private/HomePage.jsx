@@ -3,7 +3,12 @@ import style from './style.scss'
 import RightContent from '../../components/Todo/RightContent/RightContent'
 import LeftContent from '../../components/Todo/LeftContent/LeftContent'
 import {connect} from "react-redux";
-import {clearAuthUserStoreAction, getUserAction, loginAction} from "../../store/actions/authUserAction";
+import {
+	clearAuthUserStoreAction,
+	getUserAction,
+	loginAction,
+	updateUsernameAction
+} from "../../store/actions/authUserAction";
 import {useNavigate} from "react-router-dom";
 import {
 	addCategoryAction,
@@ -73,6 +78,7 @@ const HomePage = (props) => {
 					updateTaskOnServer={props.updateTask}
 					toggleLoadingTasks={props.toggleLoadingTasks}
 					getCategories={props.getCategories}
+					updateUsername={props.updateUsername}
 				/>
 			</div>
 		</div>
@@ -101,7 +107,8 @@ const mapDispatchToProps = (dispatch) => {
 		addTask: (title, description, categoryId, endDate) => dispatch(addTaskAction(title, description, categoryId, endDate)),
 		deleteTask: (id) => dispatch(deleteTaskAction(id)),
 		updateTask: (id, title, description, endDate, status) => dispatch(updateTaskAction(id, title, description, endDate, status)),
-		toggleLoadingTasks: () => dispatch(setLoadingTasksAction())
+		toggleLoadingTasks: () => dispatch(setLoadingTasksAction()),
+		updateUsername: (id, newUsername) => dispatch(updateUsernameAction(id, newUsername))
 	}
 }
 

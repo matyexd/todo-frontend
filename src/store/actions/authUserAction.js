@@ -1,4 +1,13 @@
-import {AUTH_SUCCESS, AUTH_CLEAR_STORE, AUTH_LOGIN, AUTH_FAIL, GET_USER, GET_USER_FAIL, GET_USER_SUCCESS} from "../types/authUserType";
+import {
+    AUTH_SUCCESS,
+    AUTH_CLEAR_STORE,
+    AUTH_LOGIN,
+    AUTH_FAIL,
+    GET_USER,
+    GET_USER_FAIL,
+    GET_USER_SUCCESS,
+    UPDATE_USERNAME, UPDATE_USERNAME_SUCCESS, UPDATE_USERNAME_FAIL
+} from "../types/authUserType";
 import $api from "../../http";
 
 export const loginAction = (email, password) => ({
@@ -37,6 +46,21 @@ export const getUserFailAction = (payload) => ({
     payload: payload
 })
 
+export const updateUsernameAction = (id, newUsername) => ({
+    type: UPDATE_USERNAME,
+    payload: {id, newUsername}
+})
+
+export const updateUsernameSuccessAction = (payload) => ({
+    type: UPDATE_USERNAME_SUCCESS,
+    payload: payload
+})
+
+export const updateUsernameFailAction = (payload) => ({
+    type: UPDATE_USERNAME_FAIL,
+    payload: payload
+})
+
 
 export const loginFetch = ({email, password}) => {
     return $api.post('/auth/sign-in', {"email" : email, "password" : password})
@@ -44,5 +68,9 @@ export const loginFetch = ({email, password}) => {
 
 export const getUserFetch = ({id}) => {
     return $api.get('/users/' + id)
+}
+
+export const updateUsernameFetch = ({id, newUsername}) => {
+    return $api.patch('/users/'+String(id), {"username" : newUsername})
 }
 
