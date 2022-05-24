@@ -18,9 +18,11 @@ const RightContent = ({
   	categories,
 	addTaskOnServer,
 	deleteTaskOnServer,
-	updateTaskOnServer, toggleLoadingTasks, getCategories
+	updateTaskOnServer, toggleLoadingTasks, getCategories,
+    updateUsername
 }) => {
 
+	console.log(tasksFromDB)
 	const [dateCalendar, setDateCalendar] = useState(new Date())
 
 	const [tasks, setTasks] = useState([])
@@ -49,10 +51,6 @@ const RightContent = ({
 			getCategories()
 			setTaskLoading(false)
 		}
-		// if (taskAddLoading) {
-		// 	// setTaskAddLoading(false)
-		// 	setEditable(tasksFromDB[tasksFromDB.length-1].id)
-		// }
 	}, [tasksFromDB])
 
 	useEffect(() => {
@@ -121,34 +119,15 @@ const RightContent = ({
 	}
 
 	const changeActive = (id) => {
-		// for (let item of tasks) {
-		// 	if (item.id === id) {
-		// 		if (item.active === true) {
-		// 			console.log('ya ebal')
-		// 			item.active = !item.active
-		// 			completedTasks.unshift(item)
-		// 			activeTasks = activeTasks.filter(item => item.id !== id)
-		// 			console.log(completedTasks)
-		// 			break
-		// 		}
-		// 		else {
-		// 			item.active = !item.active
-		// 			activeTasks.unshift(item)
-		// 			completedTasks = completedTasks.filter(item => item.id !== id)
-		// 			break
-		// 		}
-		// 	}
-		// }
-
 		const newArray = tasks.map((item) => {
 			if (item.id === id) {
 				if (item.active === true) {
-					updateTaskOnServer(item.id, item.title, item.discription, item.date, "COMPLETED")
+					updateTaskOnServer(item.id, item.title, item.description, item.date, "COMPLETED")
 					setTaskLoading(true)
 					return {...item, active: false}
 
 				} else {
-					updateTaskOnServer(item.id, item.title, item.discription, item.date, "CREATED")
+					updateTaskOnServer(item.id, item.title, item.description, item.date, "CREATED")
 					setTaskLoading(true)
 					return {...item, active: true}
 				}
@@ -170,7 +149,14 @@ const RightContent = ({
 					<div onClick={() => setModalActive(true)}>
 						<UiAvatar src={ava} size={73} />
 					</div>
-					<ModalWindow active={modalActive} setActive={setModalActive} clearAuthUserStore={clearAuthUserStore} userData={userData} clearCategoriesStore={clearCategoriesStore}/>
+					<ModalWindow
+						active={modalActive}
+						setActive={setModalActive}
+						clearAuthUserStore={clearAuthUserStore}
+						userData={userData}
+						clearCategoriesStore={clearCategoriesStore}
+						updateUsername={updateUsername}
+					/>
 				</div>
 			</div>
 			{categories.activeCategory !== -1 ?
@@ -203,6 +189,7 @@ const RightContent = ({
 									dateCalendar={dateCalendar}
 									setDateCalendar={setDateCalendar}
 									updateTaskOnServer={updateTaskOnServer}
+									setTaskLoading={setTaskLoading}
 								/>
 							))}
 						</div>

@@ -8,11 +8,10 @@ import dateFormat from "dateformat";
 
 const TaskItem = ({ id, title, description, date, active, selected, changeSelected, deleteTask, changeActive,
 					  editable, changeEditable, removeFuncTaskName, taskName, setTaskName,
-					  descr, setDescr, removeFuncDescr, taskDate, setTaskDate, removeFuncDate, dateCalendar, setDateCalendar, updateTaskOnServer}) => {
+					  descr, setDescr, removeFuncDescr, taskDate, setTaskDate, removeFuncDate, dateCalendar, setDateCalendar, updateTaskOnServer, setTaskLoading}) => {
 	const handleCheckBox = () => {}
 
 	const [taskNameError, setTaskNameError] = useState(false)
-	const [taskDescriptionError, setTaskDescriptionError] = useState(false)
 
 	const ExampleCustomInput = React.forwardRef(({ value, onClick }, ref) => {
 		// setTaskDate(dateFormat(value, "yyyy-mm-dd"))
@@ -23,6 +22,20 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 			</div>
 		)
 	});
+
+	const handleSaveChanges = () => {
+		if (!taskName) {
+			setTaskNameError(true)
+		}
+		else {
+			setTaskLoading(true)
+			updateTaskOnServer(id, taskName, descr, taskDate, "CREATED")
+			changeSelected(-1);
+			removeFuncDate(id);
+			removeFuncDescr(id);
+			removeFuncTaskName(id);
+		}
+	}
 
 	return (
 		<div>
@@ -51,7 +64,7 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 				{active ?
 					<div>
 						{editable === id?
-							<form className="" id="form" onSubmit={() => removeFuncTaskName(id)}>
+							<form className="" id="form" onSubmit={() => handleSaveChanges()}>
 								<input
 									style={taskNameError ? {borderColor: 'red'} : {borderColor: 'black'}}
 									className='task-title-input' type="text" value={taskName}
@@ -84,9 +97,8 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 			</div>
 			<div className='task-additionally' style={selected === id? {marginTop: 10} : {display: 'none'}}>
 				{editable === id ?
-					<form className="" id="form" onSubmit={() => removeFuncDescr(id)}>
+					<form className="" id="form" onSubmit={() => handleSaveChanges()}>
 						<textarea
-							style={taskDescriptionError ? {borderColor: 'red'} : {borderColor: 'black'}}
 							className='task-description-textarea' value={descr}
 							onChange={(e) => setDescr(e.target.value)}
 						/>
@@ -107,21 +119,7 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 					{editable === id ?
 						<div
 							style={{color: '#468EFF'}}
-							onClick={() => {
-								if (!taskName) {
-									setTaskNameError(true)
-								}
-								else if (!descr) {
-									setTaskDescriptionError(true)
-								}
-								else {
-									updateTaskOnServer(id, taskName, descr, taskDate, "CREATED")
-									changeSelected(-1);
-									removeFuncDate(id);
-									removeFuncDescr(id);
-									removeFuncTaskName(taskName);
-								}
-							}}>
+							onClick={() => handleSaveChanges()}>
 							Сохранить
 						</div>
 						:

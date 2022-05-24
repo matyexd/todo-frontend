@@ -1,4 +1,15 @@
-import {AUTH_LOGIN, AUTH_SUCCESS, AUTH_FAIL, AUTH_CLEAR_STORE, GET_USER, GET_USER_FAIL, GET_USER_SUCCESS} from "../types/authUserType";
+import {
+    AUTH_LOGIN,
+    AUTH_SUCCESS,
+    AUTH_FAIL,
+    AUTH_CLEAR_STORE,
+    GET_USER,
+    GET_USER_FAIL,
+    GET_USER_SUCCESS,
+    UPDATE_USERNAME,
+    UPDATE_USERNAME_SUCCESS,
+    UPDATE_USERNAME_FAIL
+} from "../types/authUserType";
 
 const defaultState = {
     user: {
@@ -92,6 +103,28 @@ export default function authUserReducer(state = defaultState, action) {
                 error: 'Что то не так',
                 isLoading: false,
                 isAuth: false,
+            }
+
+        case UPDATE_USERNAME:
+            return {
+                ...state,
+                isLoading: true,
+            }
+
+        case UPDATE_USERNAME_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                user: {
+                    ...state.user,
+                    username: action.payload.username
+                }
+            }
+        case UPDATE_USERNAME_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                error: 'Какая то ошибка'
             }
 
         default:
