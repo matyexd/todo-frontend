@@ -6,23 +6,53 @@ import TaskItem from './TaskItem/TaskItem'
 import { svgIcon } from '../../../assets/svg'
 import UiAccordion from '../../ui-kit/accordion/UiAccordion/UiAccordion'
 import ModalWindow from "./ModalWindow/ModalWindow";
+import dateFormat from "dateformat";
 
-const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCategory, tasksLoading, clearCategoriesStore, categories}) => {
+const RightContent = ({
+  	clearAuthUserStore,
+  	userData,
+  	tasksFromDB,
+  	setActiveCategory,
+  	tasksLoading,
+  	clearCategoriesStore,
+  	categories,
+	addTaskOnServer,
+	deleteTaskOnServer,
+	updateTaskOnServer, toggleLoadingTasks, getCategories
+}) => {
 
-	const Lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus rhoncus elit, a rhoncus mi commodo sit amet. Sed tellus nunc, vulputate sit amet viverra ultrices, venenatis vitae tortor. Mauris cursus augue quis nisi tempor eleifend. Mauris mi velit, facilisis ut pharetra eu, dignissim sed nisi. Praesent dapibus pharetra rutrum. Quisque accumsan malesuada nisl sed cursus. Etiam varius metus quam, non posuere diam sodales at. Aenean tincidunt turpis orci. Sed sed lectus ac urna lacinia efficitur nec nec dolor. Duis ex nulla, tempor id gravida iaculis, lobortis vel risus. Sed ac condimentum arcu, et tristique urna. Sed interdum ligula ut sem varius pretium. Vivamus in gravida nisl, id lobortis massa. Duis lacinia augue id ante vestibulum cursus.\n' +
-		'\n' +
-		'Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce malesuada aliquam turpis, eget dignissim justo facilisis in. Donec lorem tortor, tempor id arcu ut, aliquam vulputate erat. Proin pharetra bibendum erat, at interdum eros semper ac. Curabitur rhoncus elit orci, quis volutpat eros hendrerit nec. Etiam ultricies neque in tellus vehicula, vitae porttitor mi commodo. Proin posuere purus vitae suscipit efficitur. Fusce lorem lorem, dictum eget commodo vel, malesuada vitae augue. Pellentesque finibus, nulla at euismod maximus, odio dolor cursus mi, vel pharetra sapien mi quis orci. Praesent non enim odio. Mauris ac ex id lacus consequat cursus.'
+	const [dateCalendar, setDateCalendar] = useState(new Date())
 
 	const [tasks, setTasks] = useState([])
 	const [activeTasks, setActiveTasks] = useState([])
 	const [completedTasks, setCompletedTasks] = useState([])
-
+	const [taskLoading, setTaskLoading] = useState(false)
+	const [taskAddLoading, setTaskAddLoading] = useState(false)
+	const [taskDeleteLoading, setTaskDeleteLoading] = useState(false)
 
 	useEffect(() => {
-		if (!tasksLoading) {
-			// setTasks(tasksFromDB)
-			setTasks(tasksFromDB)
+		if (!tasksLoading && !taskLoading) {
+			if (taskAddLoading && tasksFromDB.length > 0) {
+				setEditable(tasksFromDB[tasksFromDB.length - 1].id)
+				changeSelected(tasksFromDB[tasksFromDB.length - 1].id)
+				setTaskAddLoading(false)
+				// setTasks(tasksFromDB)
+			}
+			if (taskDeleteLoading) {
+				setTaskDeleteLoading(false)
+			} else {
+				setTasks(tasksFromDB)
+			}
 		}
+		if (!categories.isLoadingTasks) {
+			toggleLoadingTasks()
+			getCategories()
+			setTaskLoading(false)
+		}
+		// if (taskAddLoading) {
+		// 	// setTaskAddLoading(false)
+		// 	setEditable(tasksFromDB[tasksFromDB.length-1].id)
+		// }
 	}, [tasksFromDB])
 
 	useEffect(() => {
@@ -70,15 +100,24 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 
 	const changeSelected = (id) => setSelected(id)
 
-	const deleteTask = (id) => setTasks(tasks.filter(item => item.id !== id))
+	const deleteTask = (id) => {
+		setTasks(tasks.filter(item => item.id !== id))
+		setTaskDeleteLoading(true)
+		deleteTaskOnServer(id)
+	}
+
 
 	const addTask = () => {
 		let createdId = Math.random()
-		setTasks([...tasks, {id: createdId, title: 'Созданная задача', description: 'Созданная задача', date: '', active: true}])
+		setTasks([...tasks, {id: createdId, title: 'Созданная задача', description: 'Созданная задача', date: dateFormat(dateCalendar, "yyyy-mm-dd"), active: true}])
 		setDescr('Созданная задача')
+		setTaskDate(dateFormat(dateCalendar, "yyyy-mm-dd"))
 		changeSelected(createdId)
 		setTaskName('Созданная задача')
 		setEditable(createdId)
+		addTaskOnServer('Созданная задача', 'Созданная задача', categories.activeCategory, dateFormat(dateCalendar, "yyyy-mm-dd"))
+		setTaskLoading(true)
+		setTaskAddLoading(true)
 	}
 
 	const changeActive = (id) => {
@@ -104,8 +143,13 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 		const newArray = tasks.map((item) => {
 			if (item.id === id) {
 				if (item.active === true) {
+					updateTaskOnServer(item.id, item.title, item.discription, item.date, "COMPLETED")
+					setTaskLoading(true)
 					return {...item, active: false}
+
 				} else {
+					updateTaskOnServer(item.id, item.title, item.discription, item.date, "CREATED")
+					setTaskLoading(true)
 					return {...item, active: true}
 				}
 			} else {
@@ -116,6 +160,7 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 		setTasks(newArray)
 
 	}
+
 
 	return (
 		<div className='right-content-container'>
@@ -128,7 +173,7 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 					<ModalWindow active={modalActive} setActive={setModalActive} clearAuthUserStore={clearAuthUserStore} userData={userData} clearCategoriesStore={clearCategoriesStore}/>
 				</div>
 			</div>
-			{categories.isLoading ? <div>Загрузка...</div> : categories.activeCategory !== -1 ?
+			{categories.activeCategory !== -1 ?
 				<div>
 					{activeTasks.length !== 0 ?
 						<div style={{marginTop: 40}}>
@@ -155,6 +200,9 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 									taskDate={taskDate}
 									setTaskDate={setTaskDate}
 									removeFuncDate={removeFuncDate}
+									dateCalendar={dateCalendar}
+									setDateCalendar={setDateCalendar}
+									updateTaskOnServer={updateTaskOnServer}
 								/>
 							))}
 						</div>
@@ -183,7 +231,7 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 				</div>
 				:
 				<div className={'tips'}>
-					Для начала работы создайте категорию
+					Для начала работы создайте или выберите категорию
 				</div>
 			}
 		</div>

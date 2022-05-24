@@ -12,8 +12,20 @@ import {
     DELETE_CATEGORY_FAIL,
     UPDATE_CATEGORY_FAIL,
     UPDATE_CATEGORY,
-    UPDATE_CATEGORY_SUCCESS, TOGGLE_LOADING_CATEGORY
+    UPDATE_CATEGORY_SUCCESS, TOGGLE_LOADING_CATEGORY,
 } from "../types/categoriesType";
+
+import {
+    ADD_TASKS,
+    ADD_TASKS_FAIL,
+    ADD_TASKS_SUCCESS,
+    UPDATE_TASKS_FAIL,
+    DELETE_TASKS_FAIL,
+    UPDATE_TASKS_SUCCESS,
+    DELETE_TASKS,
+    DELETE_TASKS_SUCCESS,
+    UPDATE_TASKS, SET_LOADING_TASKS
+} from "../types/tasksType";
 
 
 const defaultState = {
@@ -21,6 +33,7 @@ const defaultState = {
     error: '',
     isLoading: true,
     isLoadingAddCategory: true,
+    isLoadingTasks: true,
     activeCategory: -1,
 }
 
@@ -62,6 +75,8 @@ export default function categoriesReducer(state = defaultState, action) {
                 isLoadingAddCategory: true,
                 activeCategory: -1,
             }
+
+        // CRUD категорий
         case ADD_CATEGORY:
             return {
                 ...state,
@@ -124,6 +139,83 @@ export default function categoriesReducer(state = defaultState, action) {
             return {
                 ...state,
                 isLoadingAddCategory: true,
+            }
+
+            // CRUD задач
+        case ADD_TASKS:
+            return {
+                ...state,
+                isLoading: true,
+                isLoadingTasks: true,
+                error: ''
+            }
+
+        case ADD_TASKS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isLoadingTasks: false,
+                error: '',
+            }
+
+        case ADD_TASKS_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                isLoadingTasks: false,
+                error: 'Что-то пошло не так'
+            }
+
+        case UPDATE_TASKS:
+            return {
+                ...state,
+                isLoading: true,
+                error: ''
+            }
+
+        case UPDATE_TASKS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isLoadingTasks: false,
+                error: '',
+            }
+
+        case UPDATE_TASKS_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                isLoadingTasks: false,
+                error: {updateTaskFail: action.payload}
+            }
+
+        case DELETE_TASKS:
+            return {
+                ...state,
+                isLoading: true,
+                error: ''
+            }
+
+        case DELETE_TASKS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isLoadingTasks: false,
+                error: '',
+            }
+
+        case DELETE_TASKS_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                isLoadingTasks: false,
+                error: 'Что-то пошло не так'
+            }
+
+        case SET_LOADING_TASKS:
+            return {
+                ...state,
+                isLoadingTasks: true,
             }
         default:
             return state

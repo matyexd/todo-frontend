@@ -11,6 +11,12 @@ import {
 	getCategories,
 	setActiveCategoryActive, toggleLoadingCategory, updateCategoryAction
 } from "../../store/actions/categoriesAction";
+import {
+	addTaskAction,
+	updateTaskAction,
+	deleteTaskAction,
+	setLoadingTasksAction
+} from "../../store/actions/tasksAction";
 
 const HomePage = (props) => {
 
@@ -30,7 +36,6 @@ const HomePage = (props) => {
 	useEffect(() => {
 		if (!props.categories.isLoading) {
 			const newTasksArray = props.categories.categories.find(item => item.id === props.categories.activeCategory)
-			console.log(props.categories.categories)
 			const newNewTasksArray = newTasksArray ? newTasksArray.tasks.map(item => {
 				return { id: item.id, title: item.title, description: !item.discription && '', date: item.endDate, active: item.status === "CREATED" ? true : false}
 			}) : []
@@ -63,6 +68,11 @@ const HomePage = (props) => {
 					tasksLoading={tasksLoading}
 					clearCategoriesStore={props.clearCategoriesStore}
 					categories={props.categories}
+					addTaskOnServer={props.addTask}
+					deleteTaskOnServer={props.deleteTask}
+					updateTaskOnServer={props.updateTask}
+					toggleLoadingTasks={props.toggleLoadingTasks}
+					getCategories={props.getCategories}
 				/>
 			</div>
 		</div>
@@ -87,7 +97,11 @@ const mapDispatchToProps = (dispatch) => {
 		addCategory: (userId, title) => dispatch(addCategoryAction(userId, title)),
 		deleteCategory: (id) => dispatch(deleteCategoryAction(id)),
 		updateCategory: (id, title) => dispatch(updateCategoryAction(id, title)),
-		toggleLoadingCategory: () => dispatch(toggleLoadingCategory())
+		toggleLoadingCategory: () => dispatch(toggleLoadingCategory()),
+		addTask: (title, description, categoryId, endDate) => dispatch(addTaskAction(title, description, categoryId, endDate)),
+		deleteTask: (id) => dispatch(deleteTaskAction(id)),
+		updateTask: (id, title, description, endDate, status) => dispatch(updateTaskAction(id, title, description, endDate, status)),
+		toggleLoadingTasks: () => dispatch(setLoadingTasksAction())
 	}
 }
 
