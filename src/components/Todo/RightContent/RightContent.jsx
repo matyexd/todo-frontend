@@ -17,23 +17,41 @@ const RightContent = ({
   	categories,
 	addTaskOnServer,
 	deleteTaskOnServer,
-	updateTaskOnServer
+	updateTaskOnServer, toggleLoadingTasks, getCategories
 }) => {
-
-	const Lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus rhoncus elit, a rhoncus mi commodo sit amet. Sed tellus nunc, vulputate sit amet viverra ultrices, venenatis vitae tortor. Mauris cursus augue quis nisi tempor eleifend. Mauris mi velit, facilisis ut pharetra eu, dignissim sed nisi. Praesent dapibus pharetra rutrum. Quisque accumsan malesuada nisl sed cursus. Etiam varius metus quam, non posuere diam sodales at. Aenean tincidunt turpis orci. Sed sed lectus ac urna lacinia efficitur nec nec dolor. Duis ex nulla, tempor id gravida iaculis, lobortis vel risus. Sed ac condimentum arcu, et tristique urna. Sed interdum ligula ut sem varius pretium. Vivamus in gravida nisl, id lobortis massa. Duis lacinia augue id ante vestibulum cursus.\n' +
-		'\n' +
-		'Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce malesuada aliquam turpis, eget dignissim justo facilisis in. Donec lorem tortor, tempor id arcu ut, aliquam vulputate erat. Proin pharetra bibendum erat, at interdum eros semper ac. Curabitur rhoncus elit orci, quis volutpat eros hendrerit nec. Etiam ultricies neque in tellus vehicula, vitae porttitor mi commodo. Proin posuere purus vitae suscipit efficitur. Fusce lorem lorem, dictum eget commodo vel, malesuada vitae augue. Pellentesque finibus, nulla at euismod maximus, odio dolor cursus mi, vel pharetra sapien mi quis orci. Praesent non enim odio. Mauris ac ex id lacus consequat cursus.'
 
 	const [tasks, setTasks] = useState([])
 	const [activeTasks, setActiveTasks] = useState([])
 	const [completedTasks, setCompletedTasks] = useState([])
+	const [taskLoading, setTaskLoading] = useState(false)
+	const [taskAddLoading, setTaskAddLoading] = useState(false)
+	const [taskDeleteLoading, setTaskDeleteLoading] = useState(false)
 
+	console.log(tasksFromDB)
 
 	useEffect(() => {
-		if (!tasksLoading) {
-			// setTasks(tasksFromDB)
-			setTasks(tasksFromDB)
+		if (!tasksLoading && !taskLoading) {
+			if (taskAddLoading && tasksFromDB.length > 0) {
+				setEditable(tasksFromDB[tasksFromDB.length - 1].id)
+				changeSelected(tasksFromDB[tasksFromDB.length - 1].id)
+				setTaskAddLoading(false)
+				// setTasks(tasksFromDB)
+			}
+			if (taskDeleteLoading) {
+				setTaskDeleteLoading(false)
+			} else {
+				setTasks(tasksFromDB)
+			}
 		}
+		if (!categories.isLoadingTasks) {
+			toggleLoadingTasks()
+			getCategories()
+			setTaskLoading(false)
+		}
+		// if (taskAddLoading) {
+		// 	// setTaskAddLoading(false)
+		// 	setEditable(tasksFromDB[tasksFromDB.length-1].id)
+		// }
 	}, [tasksFromDB])
 
 	useEffect(() => {
@@ -81,15 +99,41 @@ const RightContent = ({
 
 	const changeSelected = (id) => setSelected(id)
 
-	const deleteTask = (id) => setTasks(tasks.filter(item => item.id !== id))
+	const deleteTask = (id) => {
+		setTasks(tasks.filter(item => item.id !== id))
+		setTaskDeleteLoading(true)
+		deleteTaskOnServer(id)
+	}
+
+	const getDate = () => {
+		let date = new Date()
+
+		let years = date.getFullYear()
+		let mounth = date.getMonth()+1
+		let day = date.getDate()
+		if (mounth < 10) {
+			mounth = '0'+mounth
+		}
+		if (day < 10) {
+			day = '0'+day
+		}
+		let gettingDate = years+'-'+mounth+'-'+day
+
+
+		return gettingDate
+	}
 
 	const addTask = () => {
 		let createdId = Math.random()
-		setTasks([...tasks, {id: createdId, title: 'Созданная задача', description: 'Созданная задача', date: '', active: true}])
+		setTasks([...tasks, {id: createdId, title: 'Созданная задача', description: 'Созданная задача', date: getDate(), active: true}])
 		setDescr('Созданная задача')
+		setTaskDate(getDate())
 		changeSelected(createdId)
 		setTaskName('Созданная задача')
 		setEditable(createdId)
+		addTaskOnServer('Созданная задача', 'Созданная задача', categories.activeCategory, getDate())
+		setTaskLoading(true)
+		setTaskAddLoading(true)
 	}
 
 	const changeActive = (id) => {
@@ -115,8 +159,13 @@ const RightContent = ({
 		const newArray = tasks.map((item) => {
 			if (item.id === id) {
 				if (item.active === true) {
+					updateTaskOnServer(item.id, item.title, item.discription, item.date, "COMPLETED")
+					setTaskLoading(true)
 					return {...item, active: false}
+
 				} else {
+					updateTaskOnServer(item.id, item.title, item.discription, item.date, "CREATED")
+					setTaskLoading(true)
 					return {...item, active: true}
 				}
 			} else {
@@ -139,7 +188,7 @@ const RightContent = ({
 					<ModalWindow active={modalActive} setActive={setModalActive} clearAuthUserStore={clearAuthUserStore} userData={userData} clearCategoriesStore={clearCategoriesStore}/>
 				</div>
 			</div>
-			{categories.isLoading ? <div>Загрузка...</div> : categories.activeCategory !== -1 ?
+			{categories.activeCategory !== -1 ?
 				<div>
 					<div style={{ marginTop: 40 }}>
 						{activeTasks.map(item => (

@@ -12,17 +12,12 @@ const LeftContent = ({categories, setActiveCategory, addCategory, deleteCategory
 
 	const handleAddCategory = () => {
 		let text = 'Новая категория'
-		if (mas.length >= 1) {
-			changeMas([...mas, { id: mas[mas.length - 1].id + 1, text: text}])
-		}
-		else {
-			changeMas([...mas, {id: 1, text: text}])
-		}
+
+		changeMas([...mas, { id: Math.random(), text: text}])
 		addCategory(localStorage.getItem('id_user'), text)
 		setAddCategoryLoading(true)
 	}
 
-	console.log(categories)
 
 	useEffect(() => {
 		if (!categories.isLoading && !addCategoryLoading) {
@@ -48,12 +43,6 @@ const LeftContent = ({categories, setActiveCategory, addCategory, deleteCategory
 		}
 		changeMas([...mas]);
 		setEditable("-1")
-	}
-
-	const handleKeyPress = (event) => {
-		if (event.key === 'Enter') {
-			console.log('enter press here! ')
-		}
 	}
 
 	const handleChangeCategory = (id) => {

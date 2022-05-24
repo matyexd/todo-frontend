@@ -7,7 +7,7 @@ import {
     DELETE_TASKS,
     UPDATE_TASKS_SUCCESS,
     UPDATE_TASKS_FAIL,
-    UPDATE_TASKS
+    UPDATE_TASKS, SET_LOADING_TASKS
 } from "../types/tasksType";
 import $api from "../../http";
 
@@ -41,9 +41,9 @@ export const deleteTaskFailAction = (payload) => ({
     payload: payload,
 })
 
-export const updateTaskAction = (id, title, description, endDate) => ({
+export const updateTaskAction = (id, title, description, endDate, status) => ({
     type: UPDATE_TASKS,
-    payload: {id, title, description, endDate}
+    payload: {id, title, description, endDate, status}
 })
 
 export const updateTaskSuccessAction = (payload) => ({
@@ -56,12 +56,17 @@ export const updateTaskFailAction = (payload) => ({
     payload: payload,
 })
 
+export const setLoadingTasksAction = () => ({
+    type: SET_LOADING_TASKS
+})
+
 export const addTaskFetch = ({title, description, categoryId, endDate}) => {
-    return $api.post('/tasks', {"title" : title, "description" : description, "categoryId" : String(categoryId), "endDate" : endDate})
+    console.log(title, description, categoryId, endDate)
+    return $api.post('/tasks', {"title" : title, "description" : description, "categoryId" : String(categoryId), "endDate" : endDate, "status" : "CREATED"})
 }
 
-export const updateTaskFetch = ({id, title, description, categoryId, endDate}) => {
-    return $api.delete('/tasks/' + String(id), {"title" : title, "description" : description, "categoryId" : String(categoryId), "endDate" : endDate})
+export const updateTaskFetch = ({id, title, description, endDate, status}) => {
+    return $api.patch('/tasks/' + String(id), {"title" : title, "description" : description, "endDate" : endDate, "status" : status})
 }
 
 export const deleteTaskFetch = ({id}) => {

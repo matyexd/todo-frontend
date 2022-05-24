@@ -24,7 +24,7 @@ import {
     UPDATE_TASKS_SUCCESS,
     DELETE_TASKS,
     DELETE_TASKS_SUCCESS,
-    UPDATE_TASKS
+    UPDATE_TASKS, SET_LOADING_TASKS
 } from "../types/tasksType";
 
 
@@ -33,6 +33,7 @@ const defaultState = {
     error: '',
     isLoading: true,
     isLoadingAddCategory: true,
+    isLoadingTasks: true,
     activeCategory: -1,
 }
 
@@ -145,6 +146,7 @@ export default function categoriesReducer(state = defaultState, action) {
             return {
                 ...state,
                 isLoading: true,
+                isLoadingTasks: true,
                 error: ''
             }
 
@@ -152,6 +154,7 @@ export default function categoriesReducer(state = defaultState, action) {
             return {
                 ...state,
                 isLoading: false,
+                isLoadingTasks: false,
                 error: '',
             }
 
@@ -159,6 +162,7 @@ export default function categoriesReducer(state = defaultState, action) {
             return {
                 ...state,
                 isLoading: false,
+                isLoadingTasks: false,
                 error: 'Что-то пошло не так'
             }
 
@@ -173,6 +177,7 @@ export default function categoriesReducer(state = defaultState, action) {
             return {
                 ...state,
                 isLoading: false,
+                isLoadingTasks: false,
                 error: '',
             }
 
@@ -180,6 +185,7 @@ export default function categoriesReducer(state = defaultState, action) {
             return {
                 ...state,
                 isLoading: false,
+                isLoadingTasks: false,
                 error: 'Что-то пошло не так'
             }
 
@@ -194,6 +200,7 @@ export default function categoriesReducer(state = defaultState, action) {
             return {
                 ...state,
                 isLoading: false,
+                isLoadingTasks: false,
                 error: '',
             }
 
@@ -201,7 +208,14 @@ export default function categoriesReducer(state = defaultState, action) {
             return {
                 ...state,
                 isLoading: false,
+                isLoadingTasks: false,
                 error: 'Что-то пошло не так'
+            }
+
+        case SET_LOADING_TASKS:
+            return {
+                ...state,
+                isLoadingTasks: true,
             }
         default:
             return state

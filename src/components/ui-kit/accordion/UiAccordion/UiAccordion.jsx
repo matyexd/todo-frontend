@@ -28,7 +28,6 @@ export default function UiAccordion({ title = 'hello', tasks, changeActive, chan
 			>
 				{tasks.map(item => (
 					<div key={item.id} aria-hidden={toggle ? 'true' : 'false'}>
-						{console.log(item)}
 						<TaskItem
 							id={item.id}
 							title={item.title}

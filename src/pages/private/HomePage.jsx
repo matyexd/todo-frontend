@@ -11,7 +11,12 @@ import {
 	getCategories,
 	setActiveCategoryActive, toggleLoadingCategory, updateCategoryAction
 } from "../../store/actions/categoriesAction";
-import {addTaskAction, updateTaskAction, deleteTaskAction} from "../../store/actions/tasksAction";
+import {
+	addTaskAction,
+	updateTaskAction,
+	deleteTaskAction,
+	setLoadingTasksAction
+} from "../../store/actions/tasksAction";
 
 const HomePage = (props) => {
 
@@ -31,7 +36,6 @@ const HomePage = (props) => {
 	useEffect(() => {
 		if (!props.categories.isLoading) {
 			const newTasksArray = props.categories.categories.find(item => item.id === props.categories.activeCategory)
-			console.log(props.categories.categories)
 			const newNewTasksArray = newTasksArray ? newTasksArray.tasks.map(item => {
 				return { id: item.id, title: item.title, description: !item.discription && '', date: item.endDate, active: item.status === "CREATED" ? true : false}
 			}) : []
@@ -67,6 +71,8 @@ const HomePage = (props) => {
 					addTaskOnServer={props.addTask}
 					deleteTaskOnServer={props.deleteTask}
 					updateTaskOnServer={props.updateTask}
+					toggleLoadingTasks={props.toggleLoadingTasks}
+					getCategories={props.getCategories}
 				/>
 			</div>
 		</div>
@@ -94,7 +100,8 @@ const mapDispatchToProps = (dispatch) => {
 		toggleLoadingCategory: () => dispatch(toggleLoadingCategory()),
 		addTask: (title, description, categoryId, endDate) => dispatch(addTaskAction(title, description, categoryId, endDate)),
 		deleteTask: (id) => dispatch(deleteTaskAction(id)),
-		updateTask: (id, title, description, endDate) => dispatch(updateTaskAction(id, title, description, endDate))
+		updateTask: (id, title, description, endDate, status) => dispatch(updateTaskAction(id, title, description, endDate, status)),
+		toggleLoadingTasks: () => dispatch(setLoadingTasksAction())
 	}
 }
 
