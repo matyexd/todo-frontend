@@ -186,7 +186,7 @@ export default function categoriesReducer(state = defaultState, action) {
                 ...state,
                 isLoading: false,
                 isLoadingTasks: false,
-                error: 'Что-то пошло не так'
+                error: {updateTaskFail: action.payload}
             }
 
         case DELETE_TASKS:

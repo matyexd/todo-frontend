@@ -1,11 +1,28 @@
-import React from 'react'
+import React, {useState} from 'react'
 import style from './style.css'
 import calendar from '../../../../assets/svg/calendar-symbol.svg'
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+import dateFormat from "dateformat";
 
 const TaskItem = ({ id, title, description, date, active, selected, changeSelected, deleteTask, changeActive,
 					  editable, changeEditable, removeFuncTaskName, taskName, setTaskName,
-					  descr, setDescr, removeFuncDescr, taskDate, setTaskDate, removeFuncDate}) => {
+					  descr, setDescr, removeFuncDescr, taskDate, setTaskDate, removeFuncDate, dateCalendar, setDateCalendar, updateTaskOnServer}) => {
 	const handleCheckBox = () => {}
+
+	const [taskNameError, setTaskNameError] = useState(false)
+	const [taskDescriptionError, setTaskDescriptionError] = useState(false)
+
+	const ExampleCustomInput = React.forwardRef(({ value, onClick }, ref) => {
+		// setTaskDate(dateFormat(value, "yyyy-mm-dd"))
+		return (
+			<div style={{display: 'flex', alignItems: 'center'}}>
+				<img src={calendar} alt="" style={{marginRight: 10}} onClick={() => onClick()}/>
+				<span style={{marginRight: 10, marginTop: 3}}>До </span>
+			</div>
+		)
+	});
 
 	return (
 		<div>
@@ -36,6 +53,7 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 						{editable === id?
 							<form className="" id="form" onSubmit={() => removeFuncTaskName(id)}>
 								<input
+									style={taskNameError ? {borderColor: 'red'} : {borderColor: 'black'}}
 									className='task-title-input' type="text" value={taskName}
 									onChange={(e) => setTaskName(e.target.value)}
 									onClick={e => e.stopPropagation()}
@@ -68,6 +86,7 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 				{editable === id ?
 					<form className="" id="form" onSubmit={() => removeFuncDescr(id)}>
 						<textarea
+							style={taskDescriptionError ? {borderColor: 'red'} : {borderColor: 'black'}}
 							className='task-description-textarea' value={descr}
 							onChange={(e) => setDescr(e.target.value)}
 						/>
@@ -86,7 +105,23 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 				}
 				<div className='task-additionally-bottom'>
 					{editable === id ?
-						<div style={{color: '#468EFF'}} onClick={() => {removeFuncDate(id); removeFuncDescr(id); removeFuncTaskName(taskName); changeSelected(-1)}}>
+						<div
+							style={{color: '#468EFF'}}
+							onClick={() => {
+								removeFuncDate(id);
+								removeFuncDescr(id);
+								removeFuncTaskName(taskName);
+								if (!taskName) {
+									setTaskNameError(true)
+								}
+								else if (!descr) {
+									setTaskDescriptionError(true)
+								}
+								else {
+									updateTaskOnServer(id, taskName, descr, taskDate, "CREATED")
+									changeSelected(-1);
+								}
+							}}>
 							Сохранить
 						</div>
 						:
@@ -96,15 +131,17 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 					}
 					<div>
 						<div style={{display: 'flex', alignItems: 'center'}}>
-							<img src={calendar} alt="" style={{marginRight: 10}}/>
+
 							{editable === id ?
-								<div style={{marginRight: -20}}>
-									<span>До </span>
+								<div style={{display: 'flex', alignItems: 'center'}}>
+									<DatePicker selected={dateCalendar} customInput={<ExampleCustomInput/>} onChange={(date) => {setDateCalendar(date); setTaskDate(dateFormat(date, "yyyy-mm-dd"))}} dateFormat="yyyy-MM-dd"/>
 									<input
-										className='task-date-input' type="text" value={taskDate}
-										onChange={(e) => setTaskDate(e.target.value)}
-										onClick={e => e.stopPropagation()}
+										className='task-date-input'
+										type="text"
+										value={taskDate}
+										disabled
 									/>
+
 								</div>
 								:
 								<span

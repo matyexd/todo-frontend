@@ -6,6 +6,7 @@ import TaskItem from './TaskItem/TaskItem'
 import { svgIcon } from '../../../assets/svg'
 import UiAccordion from '../../ui-kit/accordion/UiAccordion/UiAccordion'
 import ModalWindow from "./ModalWindow/ModalWindow";
+import dateFormat from "dateformat";
 
 const RightContent = ({
   	clearAuthUserStore,
@@ -20,14 +21,14 @@ const RightContent = ({
 	updateTaskOnServer, toggleLoadingTasks, getCategories
 }) => {
 
+	const [dateCalendar, setDateCalendar] = useState(new Date())
+
 	const [tasks, setTasks] = useState([])
 	const [activeTasks, setActiveTasks] = useState([])
 	const [completedTasks, setCompletedTasks] = useState([])
 	const [taskLoading, setTaskLoading] = useState(false)
 	const [taskAddLoading, setTaskAddLoading] = useState(false)
 	const [taskDeleteLoading, setTaskDeleteLoading] = useState(false)
-
-	console.log(tasksFromDB)
 
 	useEffect(() => {
 		if (!tasksLoading && !taskLoading) {
@@ -105,33 +106,16 @@ const RightContent = ({
 		deleteTaskOnServer(id)
 	}
 
-	const getDate = () => {
-		let date = new Date()
-
-		let years = date.getFullYear()
-		let mounth = date.getMonth()+1
-		let day = date.getDate()
-		if (mounth < 10) {
-			mounth = '0'+mounth
-		}
-		if (day < 10) {
-			day = '0'+day
-		}
-		let gettingDate = years+'-'+mounth+'-'+day
-
-
-		return gettingDate
-	}
 
 	const addTask = () => {
 		let createdId = Math.random()
-		setTasks([...tasks, {id: createdId, title: 'Созданная задача', description: 'Созданная задача', date: getDate(), active: true}])
+		setTasks([...tasks, {id: createdId, title: 'Созданная задача', description: 'Созданная задача', date: dateFormat(dateCalendar, "yyyy-mm-dd"), active: true}])
 		setDescr('Созданная задача')
-		setTaskDate(getDate())
+		setTaskDate(dateFormat(dateCalendar, "yyyy-mm-dd"))
 		changeSelected(createdId)
 		setTaskName('Созданная задача')
 		setEditable(createdId)
-		addTaskOnServer('Созданная задача', 'Созданная задача', categories.activeCategory, getDate())
+		addTaskOnServer('Созданная задача', 'Созданная задача', categories.activeCategory, dateFormat(dateCalendar, "yyyy-mm-dd"))
 		setTaskLoading(true)
 		setTaskAddLoading(true)
 	}
@@ -177,6 +161,7 @@ const RightContent = ({
 
 	}
 
+
 	return (
 		<div className='right-content-container'>
 			<div className='right-content__top'>
@@ -215,6 +200,9 @@ const RightContent = ({
 									taskDate={taskDate}
 									setTaskDate={setTaskDate}
 									removeFuncDate={removeFuncDate}
+									dateCalendar={dateCalendar}
+									setDateCalendar={setDateCalendar}
+									updateTaskOnServer={updateTaskOnServer}
 								/>
 							))}
 						</div>
@@ -243,7 +231,7 @@ const RightContent = ({
 				</div>
 				:
 				<div className={'tips'}>
-					Для начала работы создайте категорию
+					Для начала работы создайте или выберите категорию
 				</div>
 			}
 		</div>
