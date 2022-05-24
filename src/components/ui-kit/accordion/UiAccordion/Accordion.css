@@ -40,7 +40,7 @@
 }
 
 .animated {
-	max-height: 300px;
+	max-height: 800px;
 	overflow-y: scroll;
 	opacity: 1;
 	transition: height 0.3s ease-in-out, opacity 0.3s 0.3s ease-in-out;

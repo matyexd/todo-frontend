@@ -22,6 +22,7 @@ const RightContent = ({
     updateUsername
 }) => {
 
+	console.log(tasksFromDB)
 	const [dateCalendar, setDateCalendar] = useState(new Date())
 
 	const [tasks, setTasks] = useState([])
@@ -121,12 +122,12 @@ const RightContent = ({
 		const newArray = tasks.map((item) => {
 			if (item.id === id) {
 				if (item.active === true) {
-					updateTaskOnServer(item.id, item.title, item.discription, item.date, "COMPLETED")
+					updateTaskOnServer(item.id, item.title, item.description, item.date, "COMPLETED")
 					setTaskLoading(true)
 					return {...item, active: false}
 
 				} else {
-					updateTaskOnServer(item.id, item.title, item.discription, item.date, "CREATED")
+					updateTaskOnServer(item.id, item.title, item.description, item.date, "CREATED")
 					setTaskLoading(true)
 					return {...item, active: true}
 				}

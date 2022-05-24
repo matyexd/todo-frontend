@@ -42,7 +42,7 @@ const HomePage = (props) => {
 		if (!props.categories.isLoading) {
 			const newTasksArray = props.categories.categories.find(item => item.id === props.categories.activeCategory)
 			const newNewTasksArray = newTasksArray ? newTasksArray.tasks.map(item => {
-				return { id: item.id, title: item.title, description: !item.discription && '', date: item.endDate, active: item.status === "CREATED" ? true : false}
+				return { id: item.id, title: item.title, description: item.description, date: item.endDate, active: item.status === "CREATED" ? true : false}
 			}) : []
 			setTasksLoading(false)
 			setTasks(newNewTasksArray)

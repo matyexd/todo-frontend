@@ -5,7 +5,7 @@ import TaskItem from "../../../Todo/RightContent/TaskItem/TaskItem";
 
 export default function UiAccordion({ title = 'hello', tasks, changeActive, changeSelected, deleteTask, selected}) {
 	const [toggle, setToggle] = useState(false)
-	const [heightEl, setHeightEl] = useState('200px')
+	const [heightEl, setHeightEl] = useState('600px')
 
 	const refHeight = useRef()
 
