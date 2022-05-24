@@ -5,7 +5,12 @@ import LeftContent from '../../components/Todo/LeftContent/LeftContent'
 import {connect} from "react-redux";
 import {clearAuthUserStoreAction, getUserAction, loginAction} from "../../store/actions/authUserAction";
 import {useNavigate} from "react-router-dom";
-import {clearCategoriesStoreAction, getCategories, setActiveCategoryActive} from "../../store/actions/categoriesAction";
+import {
+	addCategoryAction,
+	clearCategoriesStoreAction, deleteCategoryAction,
+	getCategories,
+	setActiveCategoryActive, toggleLoadingCategory, updateCategoryAction
+} from "../../store/actions/categoriesAction";
 
 const HomePage = (props) => {
 
@@ -39,7 +44,15 @@ const HomePage = (props) => {
 
 		<div className='container'>
 			<div className='left-content'>
-				<LeftContent categories={props.categories} setActiveCategory={props.setActiveCategory}/>
+				<LeftContent
+					categories={props.categories}
+					setActiveCategory={props.setActiveCategory}
+					addCategory={props.addCategory}
+					deleteCategory={props.deleteCategory}
+					updateCategory={props.updateCategory}
+					getCategories={props.getCategories}
+					toggleLoadingCategory={props.toggleLoadingCategory}
+				/>
 			</div>
 			<div className='right-content'>
 				<RightContent
@@ -70,7 +83,11 @@ const mapDispatchToProps = (dispatch) => {
 		clearAuthUserStore: () => dispatch(clearAuthUserStoreAction()),
 		getUser: (id) => dispatch(getUserAction(id)),
 		getCategories: () => dispatch(getCategories()),
-		clearCategoriesStore: () => dispatch(clearCategoriesStoreAction())
+		clearCategoriesStore: () => dispatch(clearCategoriesStoreAction()),
+		addCategory: (userId, title) => dispatch(addCategoryAction(userId, title)),
+		deleteCategory: (id) => dispatch(deleteCategoryAction(id)),
+		updateCategory: (id, title) => dispatch(updateCategoryAction(id, title)),
+		toggleLoadingCategory: () => dispatch(toggleLoadingCategory())
 	}
 }
 

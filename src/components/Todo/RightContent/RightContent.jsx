@@ -21,7 +21,6 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 	useEffect(() => {
 		if (!tasksLoading) {
 			// setTasks(tasksFromDB)
-			console.log(tasks)
 			setTasks(tasksFromDB)
 		}
 	}, [tasksFromDB])
@@ -129,7 +128,7 @@ const RightContent = ({clearAuthUserStore, userData, tasksFromDB, setActiveCateg
 					<ModalWindow active={modalActive} setActive={setModalActive} clearAuthUserStore={clearAuthUserStore} userData={userData} clearCategoriesStore={clearCategoriesStore}/>
 				</div>
 			</div>
-			{categories.categories.length > -1 ?
+			{categories.isLoading ? <div>Загрузка...</div> : categories.activeCategory !== -1 ?
 				<div>
 					{activeTasks.length !== 0 ?
 						<div style={{marginTop: 40}}>
