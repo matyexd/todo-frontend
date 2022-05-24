@@ -52,8 +52,10 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 						}
 					</div>
 					:
-					<div className='task-name' onClick={selected === id? e => e.stopPropagation() : e => {}}>
-						<s>{title}</s>
+					<div
+						className={selected === id? 'task-name-selected' : 'task-name'}
+					>
+						{title}
 					</div>
 				}
 			</div>
