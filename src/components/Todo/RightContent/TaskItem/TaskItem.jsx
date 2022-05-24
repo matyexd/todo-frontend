@@ -108,9 +108,6 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 						<div
 							style={{color: '#468EFF'}}
 							onClick={() => {
-								removeFuncDate(id);
-								removeFuncDescr(id);
-								removeFuncTaskName(taskName);
 								if (!taskName) {
 									setTaskNameError(true)
 								}
@@ -120,6 +117,9 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 								else {
 									updateTaskOnServer(id, taskName, descr, taskDate, "CREATED")
 									changeSelected(-1);
+									removeFuncDate(id);
+									removeFuncDescr(id);
+									removeFuncTaskName(taskName);
 								}
 							}}>
 							Сохранить
