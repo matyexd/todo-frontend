@@ -47,7 +47,6 @@ const LogInPage = (props) => {
 			setErrors([error])
 		}
 		if (!error && isAuth && !isLoading) {
-			console.log('иди нахуй')
 			navigate('/')
 		}
 	}, [props.authUser])

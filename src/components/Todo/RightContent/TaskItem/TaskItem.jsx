@@ -24,7 +24,7 @@ const TaskItem = ({ id, title, description, date, active, selected, changeSelect
 	});
 
 	const handleSaveChanges = () => {
-		if (!taskName) {
+		if (!taskName && taskName.length > 127 && descr.length > 2038) {
 			setTaskNameError(true)
 		}
 		else {

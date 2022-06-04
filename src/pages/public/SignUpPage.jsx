@@ -25,7 +25,6 @@ const SignUpPage = (props) => {
 			setErrors([error])
 		}
 		if (!error && isReg && !isLoading) {
-			console.log('иди нахуй')
 			props.clearStore()
 			navigate('/login')
 		}
