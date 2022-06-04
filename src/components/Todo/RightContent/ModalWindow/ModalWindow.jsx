@@ -16,8 +16,11 @@ const ModalWindow = ({active, setActive, clearAuthUserStore, userData, clearCate
     const removeFunc = () => {
         setName(Name);
         setEditable("0")
-        if (Name) {
+        if (Name && Name.length < 30) {
             updateUsername(userData.user.id, Name)
+        }
+        else {
+            setName(userData.user.username)
         }
     }
 
