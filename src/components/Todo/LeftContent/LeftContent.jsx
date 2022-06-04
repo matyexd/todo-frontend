@@ -33,9 +33,10 @@ const LeftContent = ({categories, setActiveCategory, addCategory, deleteCategory
 	}, [categories])
 
 	const removeFunc = (id) => {
+
 		for (let i = 0; i < mas.length; i++) {
 			if (mas[i].id === id) {
-				if (categoryName) {
+				if (categoryName && categoryName.length < 25) {
 					updateCategory(id, categoryName)
 					mas[i].text = categoryName;
 				}
