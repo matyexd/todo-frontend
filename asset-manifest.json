@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/host-todo/static/css/main.0acbfa00.css",
+    "main.js": "/host-todo/static/js/main.7183ac24.js",
+    "static/media/Montserrat-Bold.ttf": "/host-todo/static/media/Montserrat-Bold.63fae500fdcf19ce83d4.ttf",
+    "static/media/Montserrat-Regular.ttf": "/host-todo/static/media/Montserrat-Regular.ac98a5f5ca71180fe293.ttf",
+    "static/media/Roboto-Regular.ttf": "/host-todo/static/media/Roboto-Regular.a8d6ac03c7b96b7acb62.ttf",
+    "static/media/Roboto-Bold.ttf": "/host-todo/static/media/Roboto-Bold.75371f53f06181df75f1.ttf",
+    "static/media/calendar-symbol.svg": "/host-todo/static/media/calendar-symbol.77b46f00b6406e332b65e92887c69195.svg",
+    "static/media/check-mark.svg": "/host-todo/static/media/check-mark.2a4d063900a3caaf8ea7b725c2ecabaf.svg",
+    "static/media/profile-logo.svg": "/host-todo/static/media/profile-logo.c182bad7005f1cee848aaf2cdc319276.svg",
+    "static/media/plus.svg": "/host-todo/static/media/plus.9998fb2479481a222a24e68f4226727f.svg",
+    "static/media/arrow.svg": "/host-todo/static/media/arrow.017af7dd50458f618353edb91bb97af1.svg",
+    "index.html": "/host-todo/index.html",
+    "static/media/dot.svg": "/host-todo/static/media/dot.16cbc6df6d2751658604251e23ac1ba3.svg",
+    "main.0acbfa00.css.map": "/host-todo/static/css/main.0acbfa00.css.map",
+    "main.7183ac24.js.map": "/host-todo/static/js/main.7183ac24.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0acbfa00.css",
+    "static/js/main.7183ac24.js"
+  ]
+}
